@@ -2,12 +2,19 @@ version: 2
 params:
   machine: {type: machine, default: [$first]}
   provider: {type: provider, default: [claude]}
+  room_dir:
+    type: directory
+    label: Society room folder
+    description: The room/ folder the Society Room CLI reads and writes (members, byelaws, invoices, records).
 resources:
   clerk:
     type: agent
     name: clerk
     display_name: Clerk
-    instructions: Open meetings, check quorum from members.yaml, record motions and votes by name.
+    instructions: |
+      Run `uv run python -m society_room --room {room_dir} <command>` for every number or decision, post its one output line word for word, and never edit files in {room_dir} by hand.
+      On "@clerk open a meeting": take the exclusive role meeting-chair, run `meeting open --present <name,name,...>`, then `vote --invoice <id> --motion "<text>" --votes <name=yes,name=no,...>` for each motion.
+      When the meeting ends run `meeting close`, then drop the role meeting-chair.
     provider: "{provider}"
     machine: "{machine}"
     directory: "{$agents_dir}/{clerk.name}"
@@ -16,7 +23,10 @@ resources:
     type: agent
     name: treasurer-agent
     display_name: Treasurer Agent
-    instructions: Book an expense only with an invoice id, a passed resolution id and a byelaw pass. Otherwise refuse and say why.
+    instructions: |
+      Run `uv run python -m society_room --room {room_dir} <command>` for every number or decision, post its one output line word for word, and never edit files in {room_dir} by hand.
+      When the owner asks to book an expense, run `book <invoice> <resolution>`; for the society's position, run `status`.
+      Book nothing on your own initiative.
     provider: "{provider}"
     machine: "{machine}"
     directory: "{$agents_dir}/{treasurer_agent.name}"
@@ -25,7 +35,9 @@ resources:
     type: agent
     name: byelaw
     display_name: Byelaw
-    instructions: Check an amount against byelaws.yaml for the member count. Above the limit, move the item to the AGM agenda instead of approving.
+    instructions: |
+      Run `uv run python -m society_room --room {room_dir} <command>` for every number or decision, post its one output line word for word, and never edit files in {room_dir} by hand.
+      To judge an invoice against the byelaws, run `check <invoice>` and relay its verdict.
     provider: "{provider}"
     machine: "{machine}"
     directory: "{$agents_dir}/{byelaw.name}"
@@ -34,7 +46,9 @@ resources:
     type: agent
     name: concierge
     display_name: Concierge
-    instructions: Answer residents only from published ledger.md, minutes.md, resolutions.jsonl.
+    instructions: |
+      Answer residents only by quoting lines of ledger.md, minutes.md, resolutions.jsonl or agenda.md in {room_dir}, naming the file; never edit those files by hand.
+      If they do not answer the question, say so and run `uv run python -m society_room --room {room_dir} agenda add "<question>"`, then post its one output line word for word.
     provider: "{provider}"
     machine: "{machine}"
     directory: "{$agents_dir}/{concierge.name}"
@@ -45,7 +59,9 @@ resources:
     description: Society committee (private)
     channel_type: channel_private
     agents: [clerk, treasurer_agent, byelaw]
-    instructions: Clerk takes the exclusive role meeting-chair when the Chairman opens a meeting; define that role first if it does not exist.
+    instructions: Clerk takes the exclusive role meeting-chair when the Chairman opens a meeting.
+    kickoff: |
+      @{clerk.name} define an exclusive role meeting-chair: only its holder chairs a meeting, opens and closes it, and records votes. Hold it only from "open a meeting" until the meeting is closed.
     group: society
   general_body:
     type: room

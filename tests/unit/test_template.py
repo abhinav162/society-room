@@ -1,14 +1,61 @@
+import re
 from pathlib import Path
 
+import pytest
 import yaml
 
 TEMPLATE = Path(__file__).parents[2] / "switch" / "society-room.yaml"
+CLI = "uv run python -m society_room --room {room_dir}"
+AGENTS = ("clerk", "treasurer_agent", "byelaw", "concierge")
+
+
+def doc():
+    return yaml.safe_load(TEMPLATE.read_text())
 
 
 def load():
-    return yaml.safe_load(TEMPLATE.read_text())["resources"]
+    return doc()["resources"]
 
 
 def test_template_is_version_2_with_both_rooms():
     rooms = {r["name"] for r in load().values() if r["type"] == "room"}
     assert rooms == {"committee", "general-body"}
+
+
+def test_room_dir_is_a_directory_param():
+    assert doc()["params"]["room_dir"]["type"] == "directory"
+
+
+@pytest.mark.parametrize("key", AGENTS)
+def test_agent_instructions_name_the_cli_in_three_lines(key):
+    text = load()[key]["instructions"]
+    assert CLI in text
+    assert len(text.strip().splitlines()) <= 3
+
+
+def test_no_rupee_amount_or_quorum_number_in_any_instruction():
+    # B1-4: numbers come from the CLI, never from the prompt.
+    for res in load().values():
+        for field in ("instructions", "kickoff"):
+            text = res.get(field, "")
+            assert not re.search(r"\d|₹|\bRs\b|INR|rupee", text, re.IGNORECASE), (res["name"], text)
+
+
+def test_treasurer_agent_is_owner_only():
+    assert load()["treasurer_agent"]["addressing"] == "owner"
+
+
+def test_room_membership():
+    res = load()
+    assert set(res["committee"]["agents"]) == {"clerk", "treasurer_agent", "byelaw"}
+    assert res["general_body"]["agents"] == ["concierge"]
+
+
+def test_committee_kickoff_defines_meeting_chair():
+    assert "meeting-chair" in load()["committee"]["kickoff"]
+
+
+def test_template_lints_clean():
+    lint = pytest.importorskip("switch_core.template_lint")
+    result = lint.lint_template(TEMPLATE.read_text())
+    assert result.errors == []
