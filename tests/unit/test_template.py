@@ -5,7 +5,7 @@ import pytest
 import yaml
 
 TEMPLATE = Path(__file__).parents[2] / "switch" / "society-room.yaml"
-CLI = "uv run python -m society_room --room {room_dir}"
+CLI = "cd {room_dir}/.. && uv run python -m society_room --room {room_dir}"
 AGENTS = ("clerk", "treasurer_agent", "byelaw", "concierge")
 
 
@@ -59,3 +59,8 @@ def test_template_lints_clean():
     lint = pytest.importorskip("switch_core.template_lint")
     result = lint.lint_template(TEMPLATE.read_text())
     assert result.errors == []
+
+
+def test_clerk_vote_example_uses_the_cli_vote_words():
+    text = load()["clerk"]["instructions"]
+    assert "=aye" in text and "=nay" in text and "=yes" not in text

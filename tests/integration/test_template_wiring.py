@@ -51,3 +51,12 @@ def test_instructed_command_exists(agent, cmd, tmp_path):
         text=True,
     )
     assert run.returncode == 0, run.stderr
+
+
+def test_agent_command_prefix_runs_from_another_directory(tmp_path):
+    # Agents run in their own folder, not the repo; the instruction's prefix must still work.
+    room = ROOM.resolve()
+    cmd = load()["byelaw"]["instructions"].split("`")[1].replace("{room_dir}", str(room))
+    cmd = cmd.replace("<command>", "status")
+    p = subprocess.run(cmd, shell=True, cwd=tmp_path, capture_output=True, text=True, check=False)
+    assert p.stdout.startswith("OK "), p.stdout + p.stderr

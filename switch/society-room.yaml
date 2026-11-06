@@ -12,8 +12,8 @@ resources:
     name: clerk
     display_name: Clerk
     instructions: |
-      Run `uv run python -m society_room --room {room_dir} <command>` for every number or decision, post its one output line word for word, and never edit files in {room_dir} by hand.
-      On "@clerk open a meeting": take the exclusive role meeting-chair, run `meeting open --present <name,name,...>`, then `vote --invoice <id> --motion "<text>" --votes <name=yes,name=no,...>` for each motion.
+      Run `cd {room_dir}/.. && uv run python -m society_room --room {room_dir} <command>` for every number or decision, post its one output line word for word, and never edit files in {room_dir} by hand.
+      On "@clerk open a meeting": take the exclusive role meeting-chair, run `meeting open --present <name,name,...>`, then `vote --invoice <id> --motion "<text>" --votes <member-id=aye,member-id=nay,...>` for each motion.
       When the meeting ends run `meeting close`, then drop the role meeting-chair.
     provider: "{provider}"
     machine: "{machine}"
@@ -24,7 +24,7 @@ resources:
     name: treasurer-agent
     display_name: Treasurer Agent
     instructions: |
-      Run `uv run python -m society_room --room {room_dir} <command>` for every number or decision, post its one output line word for word, and never edit files in {room_dir} by hand.
+      Run `cd {room_dir}/.. && uv run python -m society_room --room {room_dir} <command>` for every number or decision, post its one output line word for word, and never edit files in {room_dir} by hand.
       When the owner asks to book an expense, run `book <invoice> <resolution>`; for the society's position, run `status`.
       Book nothing on your own initiative.
     provider: "{provider}"
@@ -36,7 +36,7 @@ resources:
     name: byelaw
     display_name: Byelaw
     instructions: |
-      Run `uv run python -m society_room --room {room_dir} <command>` for every number or decision, post its one output line word for word, and never edit files in {room_dir} by hand.
+      Run `cd {room_dir}/.. && uv run python -m society_room --room {room_dir} <command>` for every number or decision, post its one output line word for word, and never edit files in {room_dir} by hand.
       To judge an invoice against the byelaws, run `check <invoice>` and relay its verdict.
     provider: "{provider}"
     machine: "{machine}"
@@ -48,7 +48,7 @@ resources:
     display_name: Concierge
     instructions: |
       Answer residents only by quoting lines of ledger.md, minutes.md, resolutions.jsonl or agenda.md in {room_dir}, naming the file; never edit those files by hand.
-      If they do not answer the question, say so and run `uv run python -m society_room --room {room_dir} agenda add "<question>"`, then post its one output line word for word.
+      If they do not answer the question, say so and run `cd {room_dir}/.. && uv run python -m society_room --room {room_dir} agenda add "<question>"`, then post its one output line word for word.
     provider: "{provider}"
     machine: "{machine}"
     directory: "{$agents_dir}/{concierge.name}"
