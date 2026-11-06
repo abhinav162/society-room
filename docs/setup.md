@@ -1,6 +1,7 @@
 # First live run: human checklist
 
 Accounts: Switch Console is signed in as Switch user `admin`. **Mattermost `user` (user@localhost.local)**, the account the Console ships with, = Treasurer and Chairman for this run, and its Mattermost account must be linked to Switch user `admin`. Mattermost `abhinav` = member-7, an outsider left unlinked. Why: Switch addressing names Switch users, not committee roles, and `treasurer-agent` uses `addressing: owner`, so whoever runs the template is the Treasurer (ADR 0001).
+Paths below are the authors' machine: replace `/Users/apple/Desktop/den/switch-hackathon/society-room` with your clone's absolute path (also in the template's `Society room folder` field).
 Needs: Docker running, `uv` installed, Switch Console open with its local server started (Mattermost at http://127.0.0.1:63942).
 
 1. **Check the stack.** In a terminal: `cd /Users/apple/Desktop/den/switch-hackathon/society-room && scripts/setup.sh`. Expect `mattermost 63942 200` and `mattermost container: up`.

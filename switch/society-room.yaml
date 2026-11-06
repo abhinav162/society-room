@@ -6,7 +6,7 @@ params:
     type: string
     default: /Users/apple/Desktop/den/switch-hackathon/society-room/room
     label: Society room folder
-    description: The room/ folder the Society Room CLI reads and writes (members, byelaws, invoices, records).
+    description: Absolute path to your clone's room/ folder, which the Society Room CLI reads and writes. The default is the authors' machine; change it.
 resources:
   clerk:
     type: agent

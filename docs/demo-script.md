@@ -6,7 +6,7 @@ Cast: Mattermost `user` = Treasurer **and** Chairman (it runs the template, so i
 
 ## Step 0: reset and template (off camera)
 
-Run in a terminal, from the repo root:
+Run in a terminal, from the repo root (the path below is the authors' machine; use your clone):
 
 ```bash
 cd /Users/apple/Desktop/den/switch-hackathon/society-room
