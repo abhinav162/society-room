@@ -13,7 +13,7 @@ cd /Users/apple/Desktop/den/switch-hackathon/society-room
 rm -f room/agenda.md room/minutes.md room/ledger.md room/resolutions.jsonl room/meeting.json
 ```
 
-Then in Switch Console, signed in as `admin`: "run a template from YAML", paste `switch/society-room.yaml`, leave the room folder prefilled. Expect rooms `committee`, `general-body` and agents `clerk`, `treasurer-agent`, `byelaw`, `concierge`. If you re-run the template, delete the old rooms and agents first. Check `abhinav` is in `committee`, and in `general-body` for beat 5.
+Then in Switch Console, signed in as `admin`: "run a template from YAML", paste `switch/society-room.yaml`, set the `Society room folder` field to your clone's `room/` path. Expect rooms `committee`, `general-body` and agents `clerk`, `treasurer-agent`, `byelaw`, `concierge`. If you re-run the template, delete the old rooms and agents first. Check `abhinav` is in `committee`, and in `general-body` for beat 5.
 
 ## Opening: the 30-second business framing (voice-over on the title card)
 
