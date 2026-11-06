@@ -24,7 +24,7 @@ export type Scene = {
 
 export const scenes: Scene[] = [
   {
-    id: 'opening', kind: 'text', title: 'Society Room', sub: 'Quorum: money leaves only after a recorded, quorate, bye-law-compliant resolution',
+    id: 'opening', kind: 'text', title: 'Society Room', sub: 'Money leaves only after a recorded, quorate, bye-law-compliant resolution',
     voice: "In Maharashtra, housing society committees are unpaid volunteers who sign for crores, and registrars dissolve committees that cannot show a recorded resolution. Apps like MyGate log who approved a payment. Society Room makes sure they had the right to: an invoice, a quorate vote by name, and the bye-law limit. Rules are enforced by Switch roles and deterministic code, not by a prompt. First buyer: the society's auditor, who signs off on exactly these records.",
     voiceSec: 27.7,
     marks: ['unpaid volunteers', 'dissolve committees', 'an invoice', 'a quorate vote by name', 'the bye-law limit', 'not by a prompt', "the society's auditor"],
