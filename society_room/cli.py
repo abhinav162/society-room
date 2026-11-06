@@ -24,6 +24,16 @@ def parse_votes(text):
     return votes
 
 
+def inr(amount):
+    """Rupees with Indian digit grouping: 100000 -> ₹1,00,000."""
+    head, tail = str(amount)[:-3], str(amount)[-3:]
+    groups = []
+    while head:
+        groups.insert(0, head[-2:])
+        head = head[:-2]
+    return "₹" + ",".join([*groups, tail])
+
+
 def invoice_amount(room, invoice_id):
     path = Path(room) / "invoices" / f"{invoice_id}.md"
     if not path.exists():
@@ -47,7 +57,7 @@ def meeting_open(room, args):
         raise Refused(f"not members: {', '.join(strangers)}")
     needed = rules.quorum(len(_members(room)))
     if not rules.quorum_met(len(present), len(_members(room))):
-        raise Refused(f"quorum not met: {len(present)} present, {needed} needed")
+        raise Refused(f"quorum not met ({len(present)}/{needed})")
     meeting = {
         "open": True,
         "opened_at": datetime.now(UTC).isoformat(),
@@ -90,10 +100,13 @@ def vote(room, args):
 
 
 def check(room, args):
-    result = rules.check_spend(invoice_amount(room, args.id), len(_members(room)))
+    amount = invoice_amount(room, args.id)
+    members = len(_members(room))
+    result = rules.check_spend(amount, members)
     if not result.ok:
         records.append_agenda(room / "agenda.md", f"AGM sanction for {args.id}: {result.reason}")
-        raise Refused(result.reason)
+        limit, label = rules._tier(members)
+        raise Refused(f"over bye-law 156 limit {inr(limit)} ({label} members); referred to AGM")
     return result.reason
 
 

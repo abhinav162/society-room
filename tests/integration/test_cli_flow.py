@@ -41,7 +41,7 @@ def lines(path):
 
 def test_b3_1_b3_2_quorum_19_refused_20_ok(room):
     code, out = run(room, "meeting", "open", "--present", present(19))
-    assert (code, out) == (1, "REFUSED quorum not met: 19 present, 20 needed")
+    assert (code, out) == (1, "REFUSED quorum not met (19/20)")
     assert not (room / "meeting.json").exists()
     assert run(room, "vote", "--invoice", "INV-068", "--motion", "m", "--votes", PASSING)[0] == 1
 
@@ -90,7 +90,7 @@ def test_meeting_close_then_vote_refused(room):
 
 def test_b4_1_b4_2_check_refers_400000_and_passes_68000(room):
     code, out = run(room, "check", "INV-400")
-    assert code == 1 and out.startswith("REFUSED ") and "bye-law 156" in out
+    assert (code, out) == (1, "REFUSED over bye-law 156 limit ₹1,00,000 (51+ members); referred to AGM")
     assert len(lines(room / "agenda.md")) == 1 and "INV-400" in lines(room / "agenda.md")[0]
     code, out = run(room, "check", "INV-068")
     assert code == 0 and out.startswith("OK ")
