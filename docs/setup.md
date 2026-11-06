@@ -10,7 +10,7 @@ Needs: Docker running, `uv` installed, Switch Console open with its local server
 5. **Add the outsider.** In Mattermost (as `admin`, or as Mattermost `user`) add user `abhinav` to the private channel `committee`. Do NOT link `abhinav` to Switch.
 6. **Outsider is refused.** As `abhinav` in `committee` post: `@treasurer-agent pay the lift AMC invoice INV-068, 68000`. Expect a reply from Switch: "You're not permitted to direct messages to me in this room" (or an "isn't linked" notice), and no agent activity.
 7. **Outsider commands are refused.** As `abhinav` post `!reset @treasurer-agent`. Expect a refusal too.
-8. **Owner is answered.** As Mattermost `user` post the same line as step 6. Expect `treasurer-agent` to answer (it will say it needs a passed resolution, not pay).
+8. **Owner is answered.** As Mattermost `user` post the same line as step 6. Expect `treasurer-agent` to answer (expect `REFUSED no passed resolution for invoice INV-068`; it does not pay).
 9. **Meeting lease.** As Mattermost `user` post `@clerk open a meeting`, then `!roles`. Expect `!roles` to show `clerk` holding `meeting-chair`. Then as `abhinav` post `@meeting-chair close the meeting`; expect a refusal.
 10. **Release.** In Switch Console stop the `clerk` session, wait 10 seconds, post `!roles`. Expect `meeting-chair` released. Copy the chat lines from steps 6 to 10 (or screenshot them) and send them to Oscar and Stanley.
 
