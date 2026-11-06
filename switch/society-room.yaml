@@ -3,7 +3,8 @@ params:
   machine: {type: machine, default: [$first]}
   provider: {type: provider, default: [claude]}
   room_dir:
-    type: directory
+    type: string
+    default: /Users/apple/Desktop/den/switch-hackathon/society-room/room
     label: Society room folder
     description: The room/ folder the Society Room CLI reads and writes (members, byelaws, invoices, records).
 resources:

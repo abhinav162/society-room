@@ -22,8 +22,11 @@ def test_template_is_version_2_with_both_rooms():
     assert rooms == {"committee", "general-body"}
 
 
-def test_room_dir_is_a_directory_param():
-    assert doc()["params"]["room_dir"]["type"] == "directory"
+def test_room_dir_is_a_string_param_prefilled_with_an_absolute_room_path():
+    # Console locks "directory" params to the agents folder, so room_dir is a prefilled string.
+    param = doc()["params"]["room_dir"]
+    assert param["type"] == "string"
+    assert Path(param["default"]).is_absolute() and param["default"].endswith("/room")
 
 
 @pytest.mark.parametrize("key", AGENTS)
