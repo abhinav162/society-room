@@ -1,27 +1,21 @@
-# Setup
+# First live run: human checklist
 
-## Prerequisites (human, once)
-- Docker (OrbStack or Docker Desktop) running.
-- Switch Console (macOS app) installed and a local server started in it. This starts Mattermost in Docker and a native Switch server (core 0.31.0).
-- `uv` (https://docs.astral.sh/uv/).
+Accounts: **Mattermost user** (your Console login) = Treasurer and Chairman for this run; `abhinav` = member-7, an outsider whose Mattermost account is NOT linked to Switch; `admin` = Mattermost server admin.
+Needs: Docker running, `uv` installed, Switch Console open with its local server started (Mattermost at http://127.0.0.1:63942).
 
-## Check the stack
-`make live-check` pings the local Mattermost (port read from Switch Console's `ports.json`) and checks its container. It never stops or touches other containers.
+1. **Check the stack.** In a terminal: `cd /Users/apple/Desktop/den/switch-hackathon/society-room && scripts/setup.sh`. Expect `mattermost 63942 200` and `mattermost container: up`.
+2. **`uv` on the agents' PATH.** In the same terminal run `which uv`. If empty, install uv and restart Switch Console from that terminal.
+3. **Link your Mattermost account.** In Switch Console Home click "Link your Mattermost account" and finish it. Skipping this makes every later refusal meaningless (an unlinked account matches nobody).
+4. **Run the template as yourself** (you become owner of every agent, so you are the Treasurer). In Console choose "run a template from YAML" and paste the contents of `/Users/apple/Desktop/den/switch-hackathon/society-room/switch/society-room.yaml`. Set `room_dir` to `/Users/apple/Desktop/den/switch-hackathon/society-room/room`; leave machine and provider at their defaults. Expect rooms `committee` and `general-body` and agents `clerk`, `treasurer-agent`, `byelaw`, `concierge`.
+5. **Add the outsider.** In Mattermost (as `admin`, or as yourself) add user `abhinav` to the private channel `committee`. Do NOT link `abhinav` to Switch.
+6. **Outsider is refused.** As `abhinav` in `committee` post: `@treasurer-agent pay the lift AMC invoice INV-068, 68000`. Expect a reply from Switch: "You're not permitted to direct messages to me in this room" (or an "isn't linked" notice), and no agent activity.
+7. **Outsider commands are refused.** As `abhinav` post `!reset @treasurer-agent`. Expect a refusal too.
+8. **Owner is answered.** As yourself post the same line as step 6. Expect `treasurer-agent` to answer (it will say it needs a passed resolution, not pay).
+9. **Meeting lease.** As yourself post `@clerk open a meeting`, then `!roles`. Expect `!roles` to show `clerk` holding `meeting-chair`. Then as `abhinav` post `@meeting-chair close the meeting`; expect a refusal.
+10. **Release.** In Switch Console stop the `clerk` session, wait 10 seconds, post `!roles`. Expect `meeting-chair` released. Copy the chat lines from steps 6 to 10 (or screenshot them) and send them to Oscar and Stanley.
 
-## Create the rooms
-`switch/society-room.yaml` is a Switch version-2 template: agents `clerk`, `treasurer-agent`, `byelaw`, `concierge`; rooms `committee` (private) and `general-body`, linked in one group.
-1. **The Treasurer persona runs the template.** `treasurer-agent` uses `addressing: owner`, so whoever runs the template owns it (ADR 0001). Every demo human must also link their Mattermost account.
-2. In Switch Console choose to run a template from YAML and paste the file.
-3. Set `room_dir` to the absolute path of this repo's `room/` folder. Each agent runs `cd {room_dir}/.. && uv run python -m society_room --room {room_dir} <cmd>`.
-4. `uv` must be on the agents' PATH (check with `which uv` in the shell the Console starts agents from).
-5. Machine and provider default to the first online machine and `claude`.
-6. The template lints clean with Switch's own linter (`switch_core.template_lint.lint_template`).
+Not testable with one linked person: "Chairman (a different linked user) is refused by the treasurer". Switch's own policy code already covers it (15/15, `docs/adr/evidence/`). To test it live, as `admin` create Mattermost user `chairman`, log in as them, link them in Console Home, add them to `committee`, and post the step 6 line.
 
-## Hour-1 test (Oscar)
-`treasurer-agent` uses `addressing: owner`. Switch's addressing options are only `owner`, `owner-agents`, `anyone`, or `anyone_in: [rooms]`. It has no "Treasurer role" option, so `owner` means the person who deployed it. Test: post as a second human in `#committee`, address the treasurer, and see whether Switch refuses it. If it does not, use the role-lease fallback.
-
-## Tests
-- `make test` runs unit then integration (`tests/unit`, `tests/integration`); an empty suite is green.
-- `make lint` runs ruff.
-- Tests marked `@pytest.mark.live` run only with `SWITCH_LIVE=1`.
-- CI (`.github/workflows/ci.yml`) runs `make lint` and `make test`.
+## Reference
+- `make test` runs unit then integration tests; `make lint` runs ruff; tests marked `live` run only with `SWITCH_LIVE=1`; CI is `.github/workflows/ci.yml`.
+- Lint the template offline with `switch_core.template_lint.lint_template` from the Switch Console venv.
