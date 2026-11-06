@@ -3,7 +3,7 @@ from pathlib import Path
 
 import pytest
 
-from society_room.ledger import book, verify
+from society_room.ledger import _inr, book, verify
 from society_room.records import append_resolution
 
 ROOM = Path(__file__).parents[2] / "room"
@@ -52,7 +52,7 @@ def test_inquorate_resolution_refused(room):
 def test_over_limit_refused_despite_resolution_and_goes_to_agenda(room):  # B4-2
     rid = resolve(room, "INV-400")
     out = book(room, "INV-400", rid)
-    assert out.startswith("REFUSED 400000 exceeds bye-law 156")
+    assert out == "REFUSED over bye-law 156 limit ₹1,00,000 (51+ members); referred to AGM"
     assert ledger(room) == ""
     assert len((room / "agenda.md").read_text().splitlines()) == 1
 
@@ -71,6 +71,15 @@ def test_second_booking_refused(room):
     before = ledger(room)
     assert book(room, "INV-068", rid) == "REFUSED already booked"
     assert ledger(room) == before
+
+
+def test_inr():
+    assert [_inr(n) for n in (100, 25000, 100000, 400000)] == [
+        "100",
+        "25,000",
+        "1,00,000",
+        "4,00,000",
+    ]
 
 
 def test_verify(room):

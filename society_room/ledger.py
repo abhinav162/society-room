@@ -9,6 +9,15 @@ from society_room import records, rules
 SEP = " · "
 
 
+def _inr(n):
+    """Indian digit grouping: 400000 -> 4,00,000."""
+    head, tail = str(n)[:-3], str(n)[-3:]
+    groups = []
+    while len(head) > 2:
+        head, groups = head[:-2], [head[-2:], *groups]
+    return ",".join([g for g in [head, *groups] if g] + [tail])
+
+
 def _invoice(room, invoice_id):
     path = room / "invoices" / f"{invoice_id}.md"
     if not path.exists():
@@ -46,10 +55,11 @@ def book(room, invoice_id, resolution_id):
         return f"REFUSED no passed resolution for invoice {invoice_id}"
     spend = rules.check_spend(invoice["amount"], _members(room))
     if not spend.ok:
+        limit, label = rules._tier(_members(room))
         records.append_agenda(
             room / "agenda.md", f"AGM sanction for {invoice_id} ({resolution_id}): {spend.reason}"
         )
-        return f"REFUSED {spend.reason}"
+        return f"REFUSED over bye-law 156 limit ₹{_inr(limit)} ({label} members); referred to AGM"
     if any(line.split(SEP)[1] == invoice_id for line in _lines(room)):
         return "REFUSED already booked"
     ref = f"MOCK-{invoice_id}-{resolution_id}"
