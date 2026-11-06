@@ -15,7 +15,7 @@
 <circle cx="220" cy="118" r="13" fill="#999"/><text x="220" y="123" fill="#fff" text-anchor="middle" font-size="12">C</text>
 <text x="242" y="116" font-weight="bold">Chairman</text>
 <rect x="312" y="105" width="66" height="15" rx="3" fill="none" stroke="#777"/><text x="317" y="116" font-size="10" fill="#777">CHAIRMAN</text>
-<text x="242" y="134" fill="#222">Opening meeting M-07. Agenda: INV-068 lift AMC Rs 68,000.</text>
+<text x="242" y="134" fill="#222">Opening a meeting. Agenda: INV-068 lift AMC Rs 68,000.</text>
 <circle cx="220" cy="164" r="13" fill="#2f5fb3"/><text x="220" y="169" fill="#fff" text-anchor="middle" font-size="12">C</text>
 <text x="242" y="162" font-weight="bold">clerk</text>
 <rect x="288" y="151" width="45" height="15" rx="3" fill="none" stroke="#2f5fb3"/><text x="293" y="162" font-size="10" fill="#2f5fb3">AGENT</text>
@@ -28,7 +28,7 @@
 <text x="242" y="254" font-weight="bold">clerk</text>
 <rect x="288" y="243" width="45" height="15" rx="3" fill="none" stroke="#2f5fb3"/><text x="293" y="254" font-size="10" fill="#2f5fb3">AGENT</text>
 <text x="242" y="272" fill="#222">Aye: Sharma, Iyer, Khan, Patil (4 of 5 committee). Nay: Desai. Tally 4</text>
-<text x="242" y="288" fill="#222">aye, 1 nay, 41 of 60 present. Passed. Resolution R-2026-07 recorded.</text>
+<text x="242" y="288" fill="#222">aye, 1 nay, 41 of 60 present. Passed. Resolution R-001 recorded.</text>
 <circle cx="220" cy="318" r="13" fill="#2f5fb3"/><text x="220" y="323" fill="#fff" text-anchor="middle" font-size="12">B</text>
 <text x="242" y="316" font-weight="bold">byelaw</text>
 <rect x="296" y="305" width="45" height="15" rx="3" fill="none" stroke="#2f5fb3"/><text x="301" y="316" font-size="10" fill="#2f5fb3">AGENT</text>
@@ -36,25 +36,24 @@
 <circle cx="220" cy="364" r="13" fill="#999"/><text x="220" y="369" fill="#fff" text-anchor="middle" font-size="12">T</text>
 <text x="242" y="362" font-weight="bold">Treasurer</text>
 <rect x="320" y="351" width="73" height="15" rx="3" fill="none" stroke="#777"/><text x="325" y="362" font-size="10" fill="#777">TREASURER</text>
-<text x="242" y="380" fill="#222">@treasurer-agent pay INV-068 under R-2026-07</text>
+<text x="242" y="380" fill="#222">@treasurer-agent pay INV-068 under R-001</text>
 <circle cx="220" cy="410" r="13" fill="#2f5fb3"/><text x="220" y="415" fill="#fff" text-anchor="middle" font-size="12">T</text>
 <text x="242" y="408" font-weight="bold">treasurer-agent</text>
 <rect x="368" y="397" width="45" height="15" rx="3" fill="none" stroke="#2f5fb3"/><text x="373" y="408" font-size="10" fill="#2f5fb3">AGENT</text>
-<text x="242" y="426" fill="#222">Booked: INV-068, R-2026-07, byelaw pass. PAID, mock UPI ref MOCK-88213.</text>
+<text x="242" y="426" fill="#222">Booked: INV-068, R-001, byelaw pass. PAID, mock UPI ref MOCK-</text>
+<text x="242" y="442" fill="#222">INV-068-R-001.</text>
 <rect x="206" y="606" width="608" height="32" rx="4" fill="#fff" stroke="#ccc"/><text x="218" y="626" fill="#777">Message #committee</text>
 <rect x="830" y="44" width="270" height="606" fill="#f3f3f3"/><text x="844" y="72" font-weight="bold">Room documents</text>
-<rect x="840" y="96" width="250" height="97" rx="4" fill="#fff" stroke="#ccc"/><text x="850" y="112" font-weight="bold" font-size="12">minutes.md</text>
-<text x="850" y="128" fill="#777" font-size="11" font-family="Menlo,monospace">M-07  quorate 41/60</text>
-<text x="850" y="143" fill="#777" font-size="11" font-family="Menlo,monospace">Motion: pay Lift AMC</text>
-<text x="850" y="158" fill="#777" font-size="11" font-family="Menlo,monospace">Ayes: Sharma Iyer</text>
-<text x="850" y="173" fill="#777" font-size="11" font-family="Menlo,monospace">      Khan Patil</text>
-<text x="850" y="188" fill="#777" font-size="11" font-family="Menlo,monospace">Nay: Desai</text>
-<rect x="840" y="203" width="250" height="52" rx="4" fill="#fff" stroke="#ccc"/><text x="850" y="219" font-weight="bold" font-size="12">resolutions.jsonl</text>
-<text x="850" y="235" fill="#777" font-size="11" font-family="Menlo,monospace">R-2026-07 passed</text>
-<text x="850" y="250" fill="#777" font-size="11" font-family="Menlo,monospace">prev_hash: 9f2c..</text>
-<rect x="840" y="265" width="250" height="67" rx="4" fill="#fff" stroke="#ccc"/><text x="850" y="281" font-weight="bold" font-size="12">ledger.md</text>
-<text x="850" y="297" fill="#777" font-size="11" font-family="Menlo,monospace">INV-068 68,000</text>
-<text x="850" y="312" fill="#777" font-size="11" font-family="Menlo,monospace">R-2026-07  PAID</text>
-<text x="850" y="327" fill="#777" font-size="11" font-family="Menlo,monospace">mock UPI MOCK-88213</text>
+<rect x="840" y="96" width="250" height="67" rx="4" fill="#fff" stroke="#ccc"/><text x="850" y="112" font-weight="bold" font-size="12">minutes.md</text>
+<text x="850" y="128" fill="#777" font-size="11" font-family="Menlo,monospace">2026-11-06: R-001 passed</text>
+<text x="850" y="143" fill="#777" font-size="11" font-family="Menlo,monospace">4-1 (0 abstain): Pay</text>
+<text x="850" y="158" fill="#777" font-size="11" font-family="Menlo,monospace">lift AMC (INV-068)</text>
+<rect x="840" y="173" width="250" height="52" rx="4" fill="#fff" stroke="#ccc"/><text x="850" y="189" font-weight="bold" font-size="12">resolutions.jsonl</text>
+<text x="850" y="205" fill="#777" font-size="11" font-family="Menlo,monospace">R-001 passed</text>
+<text x="850" y="220" fill="#777" font-size="11" font-family="Menlo,monospace">prev_hash: 9f2c..</text>
+<rect x="840" y="235" width="250" height="67" rx="4" fill="#fff" stroke="#ccc"/><text x="850" y="251" font-weight="bold" font-size="12">ledger.md</text>
+<text x="850" y="267" fill="#777" font-size="11" font-family="Menlo,monospace">2026-11-06 INV-068 68000</text>
+<text x="850" y="282" fill="#777" font-size="11" font-family="Menlo,monospace">R-001 byelaw OK PAID</text>
+<text x="850" y="297" fill="#777" font-size="11" font-family="Menlo,monospace">MOCK-INV-068-R-001</text>
 <rect y="650" width="1100" height="30" fill="#eee"/><text x="16" y="669" fill="#777" font-size="12">Low-fi wireframe. Ledger line carries all three ids. Hash chain on resolutions (cut candidate).</text>
 </svg>

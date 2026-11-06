@@ -15,44 +15,43 @@
 <circle cx="220" cy="118" r="13" fill="#999"/><text x="220" y="123" fill="#fff" text-anchor="middle" font-size="12">M</text>
 <text x="242" y="116" font-weight="bold">member-23</text>
 <rect x="320" y="105" width="66" height="15" rx="3" fill="none" stroke="#777"/><text x="325" y="116" font-size="10" fill="#777">RESIDENT</text>
-<text x="242" y="134" fill="#222">Why did maintenance go up Rs 94 a month?</text>
+<text x="242" y="134" fill="#222">Why did the society pay Rs 68,000 for the lift?</text>
 <circle cx="220" cy="164" r="13" fill="#2f5fb3"/><text x="220" y="169" fill="#fff" text-anchor="middle" font-size="12">C</text>
 <text x="242" y="162" font-weight="bold">concierge</text>
 <rect x="320" y="151" width="45" height="15" rx="3" fill="none" stroke="#2f5fb3"/><text x="325" y="162" font-size="10" fill="#2f5fb3">AGENT</text>
-<text x="242" y="180" fill="#222">Ledger line L-31 shows the lift AMC contract (Rs 68,000/yr). Minute M-07</text>
-<text x="242" y="196" fill="#222">and resolution R-2026-07 approved it: 4 aye, 1 nay, 41 of 60 members</text>
-<text x="242" y="212" fill="#222">present. Rs 68,000 / 60 flats / 12 months = about Rs 94 a month per</text>
-<text x="242" y="228" fill="#222">flat.</text>
-<circle cx="220" cy="258" r="13" fill="#999"/><text x="220" y="263" fill="#fff" text-anchor="middle" font-size="12">M</text>
-<text x="242" y="256" font-weight="bold">member-23</text>
-<rect x="320" y="245" width="66" height="15" rx="3" fill="none" stroke="#777"/><text x="325" y="256" font-size="10" fill="#777">RESIDENT</text>
-<text x="242" y="274" fill="#222">I want to inspect the records (Section 154B-8).</text>
-<circle cx="220" cy="304" r="13" fill="#2f5fb3"/><text x="220" y="309" fill="#fff" text-anchor="middle" font-size="12">C</text>
-<text x="242" y="302" font-weight="bold">concierge</text>
-<rect x="320" y="291" width="45" height="15" rx="3" fill="none" stroke="#2f5fb3"/><text x="325" y="302" font-size="10" fill="#2f5fb3">AGENT</text>
-<text x="242" y="320" fill="#222">Published for inspection: minutes.md, ledger.md, resolutions.jsonl.</text>
-<text x="242" y="336" fill="#222">Drafts stay in #committee.</text>
-<circle cx="220" cy="366" r="13" fill="#999"/><text x="220" y="371" fill="#fff" text-anchor="middle" font-size="12">M</text>
-<text x="242" y="364" font-weight="bold">member-31</text>
-<rect x="320" y="353" width="66" height="15" rx="3" fill="none" stroke="#777"/><text x="325" y="364" font-size="10" fill="#777">RESIDENT</text>
-<text x="242" y="382" fill="#222">Who approved the painting?</text>
-<circle cx="220" cy="412" r="13" fill="#2f5fb3"/><text x="220" y="417" fill="#fff" text-anchor="middle" font-size="12">C</text>
-<text x="242" y="410" font-weight="bold">concierge</text>
-<rect x="320" y="399" width="45" height="15" rx="3" fill="none" stroke="#2f5fb3"/><text x="325" y="410" font-size="10" fill="#2f5fb3">AGENT</text>
-<text x="242" y="428" fill="#222">Nobody yet. It is agenda item A-3 for the AGM. Filed as a question</text>
-<text x="242" y="444" fill="#222">there.</text>
+<text x="242" y="180" fill="#222">ledger.md: INV-068, 68000, resolution R-001. minutes.md: R-001 passed</text>
+<text x="242" y="196" fill="#222">4-1, 41 of 60 present.</text>
+<circle cx="220" cy="226" r="13" fill="#999"/><text x="220" y="231" fill="#fff" text-anchor="middle" font-size="12">M</text>
+<text x="242" y="224" font-weight="bold">member-23</text>
+<rect x="320" y="213" width="66" height="15" rx="3" fill="none" stroke="#777"/><text x="325" y="224" font-size="10" fill="#777">RESIDENT</text>
+<text x="242" y="242" fill="#222">I want to inspect the records (Section 154B-8).</text>
+<circle cx="220" cy="272" r="13" fill="#2f5fb3"/><text x="220" y="277" fill="#fff" text-anchor="middle" font-size="12">C</text>
+<text x="242" y="270" font-weight="bold">concierge</text>
+<rect x="320" y="259" width="45" height="15" rx="3" fill="none" stroke="#2f5fb3"/><text x="325" y="270" font-size="10" fill="#2f5fb3">AGENT</text>
+<text x="242" y="288" fill="#222">Published for inspection: minutes.md, ledger.md, resolutions.jsonl.</text>
+<text x="242" y="304" fill="#222">Drafts stay in #committee.</text>
+<circle cx="220" cy="334" r="13" fill="#999"/><text x="220" y="339" fill="#fff" text-anchor="middle" font-size="12">M</text>
+<text x="242" y="332" font-weight="bold">member-31</text>
+<rect x="320" y="321" width="66" height="15" rx="3" fill="none" stroke="#777"/><text x="325" y="332" font-size="10" fill="#777">RESIDENT</text>
+<text x="242" y="350" fill="#222">Who approved the painting?</text>
+<circle cx="220" cy="380" r="13" fill="#2f5fb3"/><text x="220" y="385" fill="#fff" text-anchor="middle" font-size="12">C</text>
+<text x="242" y="378" font-weight="bold">concierge</text>
+<rect x="320" y="367" width="45" height="15" rx="3" fill="none" stroke="#2f5fb3"/><text x="325" y="378" font-size="10" fill="#2f5fb3">AGENT</text>
+<text x="242" y="396" fill="#222">Nobody yet. The Rs 4,00,000 repainting (INV-400) is on the AGM agenda;</text>
+<text x="242" y="412" fill="#222">your question is filed there.</text>
 <rect x="206" y="606" width="608" height="32" rx="4" fill="#fff" stroke="#ccc"/><text x="218" y="626" fill="#777">Message #general-body</text>
 <rect x="830" y="44" width="270" height="606" fill="#f3f3f3"/><text x="844" y="72" font-weight="bold">Room documents</text>
 <rect x="840" y="96" width="250" height="52" rx="4" fill="#fff" stroke="#ccc"/><text x="850" y="112" font-weight="bold" font-size="12">minutes.md</text>
 <text x="850" y="128" fill="#777" font-size="11" font-family="Menlo,monospace">published</text>
-<text x="850" y="143" fill="#777" font-size="11" font-family="Menlo,monospace">M-07 ...</text>
+<text x="850" y="143" fill="#777" font-size="11" font-family="Menlo,monospace">R-001 passed 4-1</text>
 <rect x="840" y="158" width="250" height="52" rx="4" fill="#fff" stroke="#ccc"/><text x="850" y="174" font-weight="bold" font-size="12">ledger.md</text>
 <text x="850" y="190" fill="#777" font-size="11" font-family="Menlo,monospace">published</text>
-<text x="850" y="205" fill="#777" font-size="11" font-family="Menlo,monospace">L-31 lift AMC 68,000</text>
+<text x="850" y="205" fill="#777" font-size="11" font-family="Menlo,monospace">INV-068 68000 PAID</text>
 <rect x="840" y="220" width="250" height="52" rx="4" fill="#fff" stroke="#ccc"/><text x="850" y="236" font-weight="bold" font-size="12">resolutions.jsonl</text>
 <text x="850" y="252" fill="#777" font-size="11" font-family="Menlo,monospace">published</text>
-<text x="850" y="267" fill="#777" font-size="11" font-family="Menlo,monospace">R-2026-07</text>
-<rect x="840" y="282" width="250" height="37" rx="4" fill="#fff" stroke="#ccc"/><text x="850" y="298" font-weight="bold" font-size="12">agenda.md</text>
-<text x="850" y="314" fill="#777" font-size="11" font-family="Menlo,monospace">A-3 filed from member-31</text>
+<text x="850" y="267" fill="#777" font-size="11" font-family="Menlo,monospace">R-001</text>
+<rect x="840" y="282" width="250" height="52" rx="4" fill="#fff" stroke="#ccc"/><text x="850" y="298" font-weight="bold" font-size="12">agenda.md</text>
+<text x="850" y="314" fill="#777" font-size="11" font-family="Menlo,monospace">- AGM sanction for INV-400</text>
+<text x="850" y="329" fill="#777" font-size="11" font-family="Menlo,monospace">- question from member-31</text>
 <rect y="650" width="1100" height="30" fill="#eee"/><text x="16" y="669" fill="#777" font-size="12">Low-fi wireframe. concierge answers only from published files; unanswerable = filed as agenda item.</text>
 </svg>
