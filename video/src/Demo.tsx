@@ -55,10 +55,12 @@ const ShotView = ({shot, len}: {shot: Shot; len: number}) => {
   const fade = interpolate(f, [0, 8], [0, 1], {extrapolateRight: 'clamp'});
   return (
     <AbsoluteFill style={{background: '#111', opacity: fade}}>
-      <Img src={staticFile(`shots/${shot.src}`)} style={{position: 'absolute', top: 84, left: 0, width: 1920, height: 996, objectFit: 'contain', transformOrigin: `${z.cx}% ${z.cy}%`, transform: `scale(${k})`}} />
+      <div style={{position: 'absolute', top: 84, left: 0, width: 1920, height: 830, overflow: 'hidden'}}>
+        <Img src={staticFile(`shots/${shot.src}`)} style={{width: 1920, height: 830, objectFit: 'contain', transformOrigin: `${z.cx}% ${z.cy}%`, transform: `scale(${k})`}} />
+      </div>
       {shot.caption ? (
-        <div style={{position: 'absolute', left: 80, right: 80, bottom: 50, background: 'rgba(20,20,20,0.88)', border: `2px solid ${BLUE}`, borderRadius: 14,
-          padding: '18px 28px', fontFamily: font, color: '#fff', fontSize: 34}}>
+        <div style={{position: 'absolute', left: 80, right: 80, bottom: 28, background: 'rgba(20,20,20,0.88)', border: `2px solid ${BLUE}`, borderRadius: 14,
+          padding: '18px 28px', fontFamily: font, color: '#fff', fontSize: 30}}>
           {shot.who ? <span style={{color: '#9db8e8', fontWeight: 700, marginRight: 16}}>{shot.who}</span> : null}
           <span style={{fontFamily: 'Menlo, monospace'}}>{shot.caption.slice(0, typed)}</span>
         </div>
