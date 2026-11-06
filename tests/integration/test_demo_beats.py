@@ -38,11 +38,11 @@ def test_demo_beats_b2_to_b5(seed_room):
     assert lines(ledger) == []
 
     # B3: quorum, vote, book.
-    assert run(room, "meeting", "open", "--present", present(19)) == (1, "REFUSED quorum not met (19/20)")
-    assert run(room, "meeting", "open", "--present", present(41))[0] == 0
-    code, out = run(room, "vote", "--invoice", "INV-068", "--motion", "Pay lift AMC", "--votes", PASSING)
+    assert run(room, "meeting", "open", "--present", present(19), "--chair", "chairman") == (1, "REFUSED quorum not met (19/20)")
+    assert run(room, "meeting", "open", "--present", present(41), "--chair", "chairman")[0] == 0
+    code, out = run(room, "vote", "--invoice", "INV-068", "--motion", "Pay lift AMC", "--votes", PASSING, "--by", "chairman")
     assert code == 0 and out.startswith("OK R-001")
-    assert run(room, "meeting", "close")[0] == 0
+    assert run(room, "meeting", "close", "--by", "chairman")[0] == 0
     code, out = run(room, "check", "INV-068")
     assert code == 0 and out.startswith("OK ")
     code, out = run(room, "book", "INV-068", "R-001")
@@ -56,10 +56,10 @@ def test_demo_beats_b2_to_b5(seed_room):
         "REFUSED over bye-law 156 limit ₹1,00,000 (51+ members); referred to AGM",
     )
     assert len(lines(room / "agenda.md")) == 1
-    run(room, "meeting", "open", "--present", present(41))
-    code, out = run(room, "vote", "--invoice", "INV-400", "--motion", "Repaint", "--votes", PASSING)
+    run(room, "meeting", "open", "--present", present(41), "--chair", "chairman")
+    code, out = run(room, "vote", "--invoice", "INV-400", "--motion", "Repaint", "--votes", PASSING, "--by", "chairman")
     assert code == 0 and out.startswith("OK R-002")
-    run(room, "meeting", "close")
+    run(room, "meeting", "close", "--by", "chairman")
     code, out = run(room, "book", "INV-400", "R-002")
     assert code == 1 and out.startswith("REFUSED over bye-law 156 limit")
     assert lines(ledger) == [paid]

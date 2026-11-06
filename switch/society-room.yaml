@@ -14,12 +14,12 @@ resources:
     display_name: Clerk
     instructions: |
       Run `cd {room_dir}/.. && uv run python -m society_room --room {room_dir} <command>` for every number or decision, post its one output line word for word, and never edit files in {room_dir} by hand.
-      On "@clerk open a meeting": take the exclusive role meeting-chair, run `meeting open --present <name,name,...>`, then `vote --invoice <id> --motion "<text>" --votes <member-id=aye,member-id=nay,...>` for each motion.
-      When the meeting ends run `meeting close`, then drop the role meeting-chair.
+      On "@clerk open a meeting": take the exclusive role meeting-chair, run `meeting open --present <member-id,member-id,...> --chair <sender's Mattermost username>` (ask the chair for the present member ids if not given), then `vote --invoice <id> --motion "<text>" --votes <member-id=aye,member-id=nay,...> --by <sender's Mattermost username>` for each motion.
+      When the meeting ends run `meeting close --by <sender's Mattermost username>`, then drop the role meeting-chair; for a message you would refuse, run no command at all.
     provider: "{provider}"
     machine: "{machine}"
     directory: "{$agents_dir}/{clerk.name}"
-    addressing: {anyone_in: [committee]}
+    addressing: owner   # PER-88: Switch refuses outsiders before the clerk sees them
   treasurer_agent:
     type: agent
     name: treasurer-agent
