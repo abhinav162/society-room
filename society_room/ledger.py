@@ -60,7 +60,7 @@ def book(room, invoice_id, resolution_id):
             room / "agenda.md", f"AGM sanction for {invoice_id} ({resolution_id}): {spend.reason}"
         )
         return f"REFUSED over bye-law 156 limit ₹{_inr(limit)} ({label} members); referred to AGM"
-    if any(line.split(SEP)[1] == invoice_id for line in _lines(room)):
+    if any(line.split(SEP)[1:2] == [invoice_id] for line in _lines(room)):
         return "REFUSED already booked"
     ref = f"MOCK-{invoice_id}-{resolution_id}"
     line = SEP.join(
@@ -80,6 +80,8 @@ def book(room, invoice_id, resolution_id):
 
 def verify(room):
     """Re-check every ledger line against invoices and resolutions; catches hand edits."""
+    if not records.verify_chain(room / "resolutions.jsonl"):
+        return "REFUSED resolutions.jsonl hash chain broken"
     for line in _lines(room):
         fields = line.split(SEP)
         if (

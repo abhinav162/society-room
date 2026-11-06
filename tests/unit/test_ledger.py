@@ -91,3 +91,17 @@ def test_verify(room):
     with open(room / "ledger.md", "a") as f:
         f.write(forged + "\n")
     assert verify(room) == f"REFUSED {forged}"
+
+
+def test_verify_catches_edited_resolution(room):
+    rid = resolve(room, "INV-068")
+    book(room, "INV-068", rid)
+    path = room / "resolutions.jsonl"
+    path.write_text(path.read_text().replace('"present": 20', '"present": 41'))
+    assert verify(room) == "REFUSED resolutions.jsonl hash chain broken"
+
+
+def test_book_survives_malformed_ledger_line(room):
+    (room / "ledger.md").write_text("hand-written note\n")
+    rid = resolve(room, "INV-068")
+    assert book(room, "INV-068", rid).startswith("OK booked INV-068")
