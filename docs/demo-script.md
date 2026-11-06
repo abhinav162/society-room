@@ -63,9 +63,9 @@ Then in Switch Console, signed in as `admin`: "run a template from YAML", paste 
 
 | # | Paste | Expected |
 |---|---|---|
-| 1 | `@concierge Why did maintenance go up Rs 94 a month?` | Prose, no CLI line. Must cite `ledger.md` (INV-068, 68000, R-001), `minutes.md` (R-001 passed 4-1) and say 68,000 / 60 flats / 12 months is about Rs 94 a month. If it invents a figure not in the files, re-record. |
+| 1 | `@concierge Why did the society pay Rs 68,000 for the lift?` | Prose, no CLI line. Must cite `ledger.md` (INV-068, 68000, R-001) and `minutes.md` (R-001 passed 4-1). It must not compute any figure; if it invents one not in the files, re-record. |
 
-- Voice-over: "In the General Body room a resident asks why the bill went up. The concierge answers only from the published ledger and minutes, and cites them."
+- Voice-over: "In the General Body room a resident asks why the society paid the lift contractor. The concierge answers only from the published ledger and minutes, and cites them."
 
 ## Closing (5 s)
 
@@ -77,5 +77,4 @@ Then in Switch Console, signed in as `admin`: "run a template from YAML", paste 
 - Run the whole script once with the camera off. Compare each reply to the table; if any CLI line differs, the CLI output is right: tell Kelly and the table is updated.
 - Re-run the template from main 052cfb5 or later (a REFUSED answer no longer shows as a failed tool call).
 - Beat 3, line 1: the clerk expands the member list itself. Check its reply says `41 present`. If not, paste the fallback with all ids spelled out: `@clerk open a meeting. Present: member-1,member-2,...,member-41. I am the chair.` (write every id, no `...`).
-- Beat 5: the concierge does the 68,000 / 60 / 12 sum in prose; it is the one figure the CLI does not produce. Say so if asked.
 - Hash limit to say only if asked: `resolutions.jsonl` proves records were not edited by hand, not who wrote them.
