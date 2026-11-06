@@ -1,0 +1,62 @@
+# 60 fictional members of the society. Names are invented.
+members:
+  - {id: member-1, name: Aarav Patil, flat: A-101, role: Chairman}
+  - {id: member-2, name: Priya Patil, flat: A-102, role: Secretary}
+  - {id: member-3, name: Rohan Patil, flat: A-103, role: Treasurer}
+  - {id: member-4, name: Sneha Patil, flat: A-104}
+  - {id: member-5, name: Vikram Patil, flat: A-105}
+  - {id: member-6, name: Ananya Patil, flat: A-106}
+  - {id: member-7, name: Karan Patil, flat: A-107}
+  - {id: member-8, name: Meera Patil, flat: A-108}
+  - {id: member-9, name: Arjun Patil, flat: A-109}
+  - {id: member-10, name: Kavya Patil, flat: A-110}
+  - {id: member-11, name: Rahul Patil, flat: A-111}
+  - {id: member-12, name: Pooja Patil, flat: A-112}
+  - {id: member-13, name: Siddharth Patil, flat: A-113}
+  - {id: member-14, name: Neha Patil, flat: A-114}
+  - {id: member-15, name: Aditya Patil, flat: A-115}
+  - {id: member-16, name: Ishita Patil, flat: A-116}
+  - {id: member-17, name: Nikhil Patil, flat: A-117}
+  - {id: member-18, name: Riya Patil, flat: A-118}
+  - {id: member-19, name: Varun Patil, flat: A-119}
+  - {id: member-20, name: Tanvi Patil, flat: A-120}
+  - {id: member-21, name: Aarav Deshmukh, flat: B-101}
+  - {id: member-22, name: Priya Deshmukh, flat: B-102}
+  - {id: member-23, name: Rohan Deshmukh, flat: B-103}
+  - {id: member-24, name: Sneha Deshmukh, flat: B-104}
+  - {id: member-25, name: Vikram Deshmukh, flat: B-105}
+  - {id: member-26, name: Ananya Deshmukh, flat: B-106}
+  - {id: member-27, name: Karan Deshmukh, flat: B-107}
+  - {id: member-28, name: Meera Deshmukh, flat: B-108}
+  - {id: member-29, name: Arjun Deshmukh, flat: B-109}
+  - {id: member-30, name: Kavya Deshmukh, flat: B-110}
+  - {id: member-31, name: Rahul Deshmukh, flat: B-111}
+  - {id: member-32, name: Pooja Deshmukh, flat: B-112}
+  - {id: member-33, name: Siddharth Deshmukh, flat: B-113}
+  - {id: member-34, name: Neha Deshmukh, flat: B-114}
+  - {id: member-35, name: Aditya Deshmukh, flat: B-115}
+  - {id: member-36, name: Ishita Deshmukh, flat: B-116}
+  - {id: member-37, name: Nikhil Deshmukh, flat: B-117}
+  - {id: member-38, name: Riya Deshmukh, flat: B-118}
+  - {id: member-39, name: Varun Deshmukh, flat: B-119}
+  - {id: member-40, name: Tanvi Deshmukh, flat: B-120}
+  - {id: member-41, name: Aarav Kulkarni, flat: C-101}
+  - {id: member-42, name: Priya Kulkarni, flat: C-102}
+  - {id: member-43, name: Rohan Kulkarni, flat: C-103}
+  - {id: member-44, name: Sneha Kulkarni, flat: C-104}
+  - {id: member-45, name: Vikram Kulkarni, flat: C-105}
+  - {id: member-46, name: Ananya Kulkarni, flat: C-106}
+  - {id: member-47, name: Karan Kulkarni, flat: C-107}
+  - {id: member-48, name: Meera Kulkarni, flat: C-108}
+  - {id: member-49, name: Arjun Kulkarni, flat: C-109}
+  - {id: member-50, name: Kavya Kulkarni, flat: C-110}
+  - {id: member-51, name: Rahul Kulkarni, flat: C-111}
+  - {id: member-52, name: Pooja Kulkarni, flat: C-112}
+  - {id: member-53, name: Siddharth Kulkarni, flat: C-113}
+  - {id: member-54, name: Neha Kulkarni, flat: C-114}
+  - {id: member-55, name: Aditya Kulkarni, flat: C-115}
+  - {id: member-56, name: Ishita Kulkarni, flat: C-116}
+  - {id: member-57, name: Nikhil Kulkarni, flat: C-117}
+  - {id: member-58, name: Riya Kulkarni, flat: C-118}
+  - {id: member-59, name: Varun Kulkarni, flat: C-119}
+  - {id: member-60, name: Tanvi Kulkarni, flat: C-120}

@@ -1,0 +1,11 @@
+# Model bye-laws of a Maharashtra co-operative housing society (subset used by Society Room).
+"156":
+  title: Repair spend the committee may approve without prior General Body sanction
+  # Limit is inclusive and applies per spend item; above it, the item goes to the AGM agenda.
+  tiers:
+    - {max_members: 25, limit: 25000}
+    - {max_members: 50, limit: 50000}
+    - {max_members: null, limit: 100000}
+"100":
+  title: Quorum of a General Body meeting
+  quorum: {fraction: "2/3", cap: 20}  # 2/3 of members or 20, whichever is less
