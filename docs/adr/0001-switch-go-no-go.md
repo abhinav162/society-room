@@ -1,6 +1,6 @@
 # ADR 0001: Hour-1 Switch go/no-go
 
-- Status: Accepted (code-level evidence); live chat replay by Stanley pending, appended below when done
+- Status: Accepted. (b) is confirmed live (6 of 6). The treasurer-agent live lines are pending; (a) rests on code evidence until they land.
 - Date: 2026-11-06
 - Deciders: Oscar (architect), Stanley (platform)
 - Switch version tested: switch-core **0.31.0**, the native server Switch Console runs locally (`~/Library/Application Support/switchdash/local-switch-server/native/switch-core/0.31.0`). Health `GET :63941/health` → `{"status":"ok"}`; Mattermost ping on :63942 → `OK`.
@@ -77,15 +77,26 @@ Reproduce it with: `"$HOME/Library/Application Support/switchdash/local-switch-s
   - **No narrower option in the template.** Templates offer only `owner`, `owner-agents`, `anyone` and `anyone_in`. Admitting several named users needs Custom rules, set in Switch Console after the run.
   - **Who plays whom.** The demo's one linked person, Mattermost `user`, plays both Chairman and Treasurer.
   - **Second layer (dev-chair).** The CLI checks the chair (`--chair` on `open`, `--by` on `close` and `vote`) against `members.yaml`.
-- `byelaw` keeps `anyone_in: [committee]`. It only runs a read-only check, and an over-limit referral to the AGM is harmless whoever asks.
+- `byelaw` keeps `anyone_in: [committee]`. It moves no money, but it is **not** read-only: `check` on an over-limit invoice adds an `agenda.md` item on every call, with no dedupe; only `book` dedupes. So anyone in the room, unlinked included, can add AGM agenda items through `@byelaw`. This is stated as a known limit (architecture.md §9).
 - The demo needs at least 3 Mattermost accounts: Treasurer (deployer, linked), Chairman, member-7. Linking or leaving the Chairman and member-7 unlinked does not change beat 2. Either way they are refused.
 
-## Live replay (Stanley), pending
+## Live replay
 
-Cast agreed with the human on 2026-11-06:
-- Treasurer = Mattermost `user`, the Switch Console's own account. The Console is signed in as Switch user `admin`, who runs the template and so owns `treasurer-agent`.
-- Non-owner = Mattermost `abhinav`, unlinked.
+### Clerk gate: PASS, 6 of 6 (2026-11-06, main 9400e08, `#committee`)
 
-The code check covers both: the owner is allowed, and an unlinked account is refused. The only extra condition is that `user` is linked to `admin` (Console Home shows no "Link your Mattermost account").
+God read these messages through the Mattermost API, read-only.
 
-Checks A1 (abhinav), A3 (user) and B2/B6 (`!roles`) go here, with screenshots in `docs/adr/evidence/`.
+| Time (IST) | Who | Message | Result |
+|---|---|---|---|
+| 22:27:45 | abhinav (unlinked) | `@meeting-chair close the meeting` | Switch: "no agent currently holds the meeting-chair role" |
+| 22:28:38 | user (owner) | `@clerk open a meeting, present member-1..20` | clerk took `meeting-chair`: `OK meeting open: 20 present, 20 needed, chair user` |
+| 22:29:14 | — | `!roles` | `meeting-chair` held by Clerk |
+| 22:29:50 | abhinav (unlinked) | `@meeting-chair close the meeting` | same-second reply, no tool calls, no CLI output: "I only take instructions from my owner, and this chat account isn't linked to a Switch user yet". This is Switch's refusal (`ADDRESSING_UNCLAIMED_MESSAGE`), not the LLM's |
+| 22:30:23 | user (owner) | `@clerk close the meeting` | `OK meeting closed`; `meeting-chair` released |
+| 22:30:46 | — | `!roles` | `meeting-chair` free |
+
+This confirms (b) live: the exclusive lease, `!roles`, `@role` routing to the holder, and the holder's addressing applied to `@role`.
+
+### treasurer-agent: pending
+
+Still to run: abhinav `@treasurer-agent pay INV-068` (expect Switch's refusal); user, same message (expect `REFUSED no passed resolution for invoice INV-068`). The human posts these; results go here.

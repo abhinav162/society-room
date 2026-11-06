@@ -119,6 +119,8 @@ The engine re-derives everything. It trusts no agent's word.
 
 - Addressing names Switch users. The Treasurer persona must run the template, and every person must link their Mattermost account (ADR 0001).
 - The engine cannot verify who voted. Votes come from what clerk records in chat in `committee`. Addressing stops outsiders, but committee members are trusted to vote in their own names. Real deployments would need per-person addressing on clerk or signed votes.
+- `@byelaw` admits anyone in `committee`, unlinked accounts included. `check` adds an AGM agenda item on every over-limit call, with no dedupe, so an outsider can add agenda items. No money moves.
+- The `resolutions.jsonl` hash is unkeyed. It shows the records were not edited by hand, not who wrote them.
 - Payment and invoice reading are mocked (PRD §6).
 
 ## 10. What is deliberately not here
