@@ -106,3 +106,8 @@ def test_agenda_add_and_status(room, capsys):
     assert main(["--room", str(room), "status"]) == 0
     out = capsys.readouterr().out
     assert out.startswith("OK ") and "open" in out and "R-001" in out and "verified" in out
+
+
+def test_duplicate_attendees_do_not_count_toward_quorum(room):  # B3-2
+    code, out = run(room, "meeting", "open", "--present", ",".join(["member-1"] * 20))
+    assert (code, out) == (1, "REFUSED quorum not met (1/20)")

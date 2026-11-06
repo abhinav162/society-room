@@ -51,7 +51,7 @@ def _meeting(room):
 
 
 def meeting_open(room, args):
-    present = args.present.split(",")
+    present = sorted(set(args.present.split(",")))  # a name listed twice is one person
     strangers = sorted(set(present) - set(_members(room)))
     if strangers:
         raise Refused(f"not members: {', '.join(strangers)}")
