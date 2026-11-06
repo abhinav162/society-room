@@ -35,8 +35,7 @@ export const scenes: Scene[] = [
     voice: "A resident says 'just pay it'. Switch itself stops the message: the agent never sees it. Even the Treasurer is refused: no resolution.", voiceSec: 9.2, shots: [
       {src: 'b2-1b-after-post.png', who: 'abhinav', caption: '@treasurer-agent pay the lift AMC invoice INV-068, 68000', zoom: {cx: 40.8, cy: 60, s: 1.15}, weight: 1},
       {src: 'b2-1d-switch-reply-thread.png', who: 'Switch', caption: "I only take instructions from my owner, and this chat account isn't linked to a Switch user yet", zoom: {cx: 71.3, cy: 78, s: 1.45}, weight: 1.5},
-      {src: 'b2-2b-treasurer-asks.png', who: 'treasurer-agent', caption: 'Which resolution approves it? Reply with the resolution id, or "none".', zoom: {cx: 71.3, cy: 78, s: 1.45}, weight: 1},
-      {src: 'b2-2d-refused-thread.png', who: 'treasurer-agent', caption: 'REFUSED no passed resolution for invoice INV-068', zoom: {cx: 73.2, cy: 86, s: 1.7}, weight: 1.5},
+      {src: 'b2-refused-channel.png', who: 'treasurer-agent', caption: 'REFUSED no passed resolution for invoice INV-068', zoom: {cx: 39, cy: 86, s: 1.7}, weight: 2.5},
     ]},
   {id: 'b3', kind: 'shots', title: 'B3: quorum, vote by name, booked',
     voice: 'The Chairman opens the meeting; the clerk counts quorum, 20 needed, 41 present, and records the vote by name. Only now does the treasurer book: invoice, resolution and bye-law check, all three.', voiceSec: 13.1, shots: [
