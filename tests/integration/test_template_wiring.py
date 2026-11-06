@@ -16,7 +16,7 @@ COMMANDS = {
     "treasurer_agent": ["book", "status"],
     "concierge": ["agenda add"],
 }
-PENDING = {"book"}  # treasurer `book` lands in a separate change
+PENDING = set()
 
 
 def test_every_room_agent_exists_and_has_an_owner_rule():
