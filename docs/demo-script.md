@@ -33,7 +33,8 @@ Then in Switch Console, signed in as `admin`: "run a template from YAML", paste 
 | # | Who | Paste | Expected |
 |---|---|---|---|
 | 1 | `abhinav` | `@treasurer-agent pay the lift AMC invoice INV-068, 68000` | Switch replies at once: "I only take instructions from my owner, and this chat account isn't linked to a Switch user yet" (or "You're not permitted to direct messages to me in this room"). The agent does nothing. |
-| 2 | `user` | `@treasurer-agent pay the lift AMC invoice INV-068, 68000` | `REFUSED no passed resolution for invoice INV-068` (about 30 s) |
+| 2 | `user` | `@treasurer-agent pay the lift AMC invoice INV-068, 68000` | Seen live: the agent first asks which resolution approves it (or none), and does not run `book` yet. |
+| 3 | `user` | `none` (reply in the thread) | `REFUSED no passed resolution for invoice INV-068` (about 30 s) |
 
 - Voice-over: "A resident says 'just pay it'. Switch itself stops the message: the agent never sees it. Even the Treasurer is refused: no resolution."
 

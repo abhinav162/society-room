@@ -72,7 +72,7 @@ IDs are stable: Dwight maps tasks to them (`B1` to `B5`). Each criterion is a te
 
 ### B5. Residents get answers from the records
 *As a resident, I ask why my bill changed and get the answer with proof.*
-- B5-1: In `#general-body`, a resident asks "Why did the society pay Rs 68,000 for the lift?". `concierge` replies citing the ledger line (INV-068, 68000, R-001) and the minute (R-001 passed 4-1, 41 of 60 members present); no figure is computed by the agent, every figure appears in the published files.
+- B5-1: In `#general-body`, a resident asks "Why did the society pay Rs 68,000 for the lift?". `concierge` replies citing the ledger line (INV-068, 68000, R-001) and the minute (R-001 passed 4-1, 41 members present); no figure is computed by the agent, every figure appears in the published files.
 - B5-2: A question the files cannot answer: `concierge` says so and adds an agenda item. It never invents an answer.
 - B5-3 (cut candidate): A member asks to inspect records (Section 154B-8) and receives the published files.
 
