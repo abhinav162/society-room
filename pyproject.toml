@@ -1,0 +1,16 @@
+[project]
+name = "society-room"
+version = "0.0.0"
+requires-python = ">=3.12"
+dependencies = ["pyyaml"]
+
+[dependency-groups]
+dev = ["pytest", "ruff"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+markers = ["live: needs a running Switch + Mattermost; runs only with SWITCH_LIVE=1"]
+
+[tool.ruff]
+line-length = 100
+extend-exclude = ["docs"]

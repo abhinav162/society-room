@@ -1,0 +1,47 @@
+version: 2
+params:
+  machine: {type: machine, default: [$first]}
+  provider: {type: provider, default: [claude]}
+resources:
+  clerk:
+    type: agent
+    display_name: Clerk
+    instructions: Open meetings, check quorum from members.yaml, record motions and votes by name.
+    provider: "{provider}"
+    machine: "{machine}"
+    directory: "{$agents_dir}/{clerk.name}"
+    addressing: {anyone_in: [committee]}
+  treasurer:
+    type: agent
+    display_name: Treasurer Agent
+    instructions: Book an expense only with an invoice id, a passed resolution id and a byelaw pass. Otherwise refuse and say why.
+    provider: "{provider}"
+    machine: "{machine}"
+    directory: "{$agents_dir}/{treasurer.name}"
+    addressing: owner   # hour-1 test: does Switch refuse messages from non-owners?
+  concierge:
+    type: agent
+    display_name: Concierge
+    instructions: Answer residents only from published ledger.md, minutes.md, resolutions.jsonl.
+    provider: "{provider}"
+    machine: "{machine}"
+    directory: "{$agents_dir}/{concierge.name}"
+    addressing: {anyone_in: [general_body]}
+  committee:
+    type: room
+    name: committee
+    description: Society committee (private)
+    channel_type: channel_private
+    agents: [clerk, treasurer]
+    group: society
+  general_body:
+    type: room
+    name: general-body
+    description: Residents (read-only on committee drafts)
+    agents: [concierge]
+    group: society
+  society:
+    type: group
+    name: Society Room
+    description: Committee and general body
+    links: [{from: committee, to: general_body, label: published records}]
