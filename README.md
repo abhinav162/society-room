@@ -43,8 +43,11 @@ Evidence that Switch itself refuses outsiders (15/15 policy checks, plus a live 
 Needs Docker, `uv`, and Switch Console with its local server. Step by step, with the accounts to create: [`docs/setup.md`](docs/setup.md). Then tests:
 
 ```bash
-make test     # unit and integration tests for the engine and the template
+make lint     # ruff
+make test     # unit and integration tests for the engine and the template (uv installs dependencies on first run)
 ```
+
+In a clone, set the template's `Society room folder` to the absolute path of your clone's `room/` (the default is the authors' machine). To restart the demo clean, delete `room/agenda.md`, `minutes.md`, `ledger.md`, `resolutions.jsonl` and `meeting.json`.
 
 ## Repo map
 
