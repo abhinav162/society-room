@@ -5,9 +5,7 @@ import json
 from datetime import UTC, datetime
 from pathlib import Path
 
-import yaml
-
-from society_room import records, rules
+from society_room import ledger, records, rules
 
 CHOICES = ("aye", "nay", "abstain")
 
@@ -22,23 +20,6 @@ def parse_votes(text):
     if bad:
         raise ValueError(f"vote must be one of {', '.join(CHOICES)}, got {bad[0]}")
     return votes
-
-
-def inr(amount):
-    """Rupees with Indian digit grouping: 100000 -> ₹1,00,000."""
-    head, tail = str(amount)[:-3], str(amount)[-3:]
-    groups = []
-    while head:
-        groups.insert(0, head[-2:])
-        head = head[:-2]
-    return "₹" + ",".join([*groups, tail])
-
-
-def invoice_amount(room, invoice_id):
-    path = Path(room) / "invoices" / f"{invoice_id}.md"
-    if not path.exists():
-        raise Refused(f"no invoice {invoice_id}")
-    return yaml.safe_load(path.read_text().split("---")[1])["amount"]
 
 
 def _members(room):
@@ -100,13 +81,14 @@ def vote(room, args):
 
 
 def check(room, args):
-    amount = invoice_amount(room, args.id)
+    amount = rules.invoice_amount(room, args.id)
+    if amount is None:
+        raise Refused(f"no invoice {args.id}")
     members = len(_members(room))
     result = rules.check_spend(amount, members)
     if not result.ok:
         records.append_agenda(room / "agenda.md", f"AGM sanction for {args.id}: {result.reason}")
-        limit, label = rules._tier(members)
-        raise Refused(f"over bye-law 156 limit {inr(limit)} ({label} members); referred to AGM")
+        raise Refused(rules.limit_refusal(members))
     return result.reason
 
 
@@ -122,6 +104,14 @@ def status(room, args):
     chain = "verified" if records.verify_chain(path) else "BROKEN"
     state = "open" if _meeting(room)["open"] else "closed"
     return f"meeting {state}, last resolution {last}, chain {chain}"
+
+
+def book(room, args):
+    return ledger.book(room, args.invoice, args.resolution)
+
+
+def verify(room, args):
+    return ledger.verify(room)
 
 
 def _parser():
@@ -149,6 +139,12 @@ def _parser():
     a.add_argument("text")
     a.set_defaults(run=agenda_add)
 
+    b = sub.add_parser("book")
+    b.add_argument("invoice")
+    b.add_argument("resolution", help="resolution id, or - for none")
+    b.set_defaults(run=book)
+
+    sub.add_parser("verify").set_defaults(run=verify)
     sub.add_parser("status").set_defaults(run=status)
     return p
 
@@ -156,8 +152,12 @@ def _parser():
 def main(argv=None):
     args = _parser().parse_args(argv)
     try:
-        print(f"OK {args.run(args.room, args)}")
-        return 0
+        out = args.run(args.room, args)
     except Refused as e:
         print(f"REFUSED {e}")
         return 1
+    if args.run in (book, verify):  # ledger strings already start with OK or REFUSED
+        print(out)
+        return 0 if out.startswith("OK") else 1
+    print(f"OK {out}")
+    return 0

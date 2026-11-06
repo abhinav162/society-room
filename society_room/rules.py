@@ -45,6 +45,30 @@ def committee_limit(member_count):
     return _tier(member_count)[0]
 
 
+def limit_refusal(member_count):
+    """The refusal text for a spend over the bye-law 156 limit (PRD B4-1)."""
+    limit, label = _tier(member_count)
+    return f"over bye-law 156 limit {inr(limit)} ({label} members); referred to AGM"
+
+
+def inr(amount):
+    """Rupees with Indian digit grouping: 100000 -> ₹1,00,000."""
+    head, tail = str(amount)[:-3], str(amount)[-3:]
+    groups = []
+    while head:
+        groups.insert(0, head[-2:])
+        head = head[:-2]
+    return "₹" + ",".join([*groups, tail])
+
+
+def invoice_amount(room, invoice_id):
+    """The amount on invoices/<id>.md, or None when there is no such invoice."""
+    path = Path(room) / "invoices" / f"{invoice_id}.md"
+    if not path.exists():
+        return None
+    return yaml.safe_load(path.read_text().split("---")[1])["amount"]
+
+
 @dataclass(frozen=True)
 class SpendCheck:
     ok: bool
