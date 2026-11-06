@@ -43,9 +43,12 @@ Evidence that Switch itself refuses outsiders (15/15 policy checks, plus a live 
 Needs Docker, `uv`, and Switch Console with its local server. Step by step, with the accounts to create: [`docs/setup.md`](docs/setup.md). Then tests:
 
 ```bash
+uv sync       # install dependencies
 make lint     # ruff
-make test     # unit and integration tests for the engine and the template (uv installs dependencies on first run)
+make test     # unit and integration tests; Dwight's clean-clone run: 58 passed, 1 skipped (live test, needs SWITCH_LIVE=1)
 ```
+
+The tests need no Switch Console. The live demo does: follow `docs/setup.md`.
 
 In a clone, set the template's `Society room folder` to the absolute path of your clone's `room/` (the default is the authors' machine). To restart the demo clean, delete `room/agenda.md`, `minutes.md`, `ledger.md`, `resolutions.jsonl` and `meeting.json`.
 
