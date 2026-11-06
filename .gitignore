@@ -5,3 +5,9 @@ __pycache__/
 .pytest_cache/
 node_modules/
 .DS_Store
+# demo records the CLI writes during a live run; reset by deleting them
+room/agenda.md
+room/minutes.md
+room/ledger.md
+room/resolutions.jsonl
+room/meeting.json
