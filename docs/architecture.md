@@ -67,7 +67,7 @@ flowchart LR
 | Agent | Room | Addressing (who may instruct it) | May run | Must never |
 |---|---|---|---|---|
 | `treasurer-agent` | committee | `owner`: the Treasurer, who runs the template (ADR 0001). Everyone else gets Switch's refusal | `society book`, `society status` | book without the CLI saying OK; book anything on its own initiative |
-| `clerk` | committee | `anyone_in: [committee]` | take/drop role `meeting-chair`; `society meeting open/close`, `society vote`, `society minutes` | count quorum or tally votes itself |
+| `clerk` | committee | `owner`: the template runner, the demo's Chairman and Treasurer (ADR 0001, revised). The CLI also checks `--chair`/`--by` | take/drop role `meeting-chair`; `society meeting open/close`, `society vote`, `society minutes` | count quorum or tally votes itself |
 | `byelaw` | committee | `anyone_in: [committee]` | `society check <invoice>` (limit check; refers to AGM) | approve an amount the CLI refers |
 | `concierge` | general-body | `anyone_in: [general_body]` | read `room/` published files; `society agenda add` for questions it cannot answer | answer without citing a file line; write any other file |
 
