@@ -1,10 +1,12 @@
 import {AbsoluteFill, Audio, Img, Sequence, interpolate, spring, staticFile, useCurrentFrame, useVideoConfig} from 'remotion';
-import {FPS, Scene, Shot, scenes} from './manifest';
+import {FPS, Msg, Scene, Shot, scenes} from './manifest';
+import captions from './captions.json';
 
 const INK = '#222', BLUE = '#2f5fb3', AMBER = '#a15c00';
 const font = 'Helvetica, Arial, sans-serif';
 const PAD = 0.9; // seconds of air after each voice-over
-const frames = (s: Scene) => Math.ceil((s.voiceSec + PAD) * FPS);
+const frames = (s: Scene) => Math.ceil((s.voiceSec + PAD + (s.extra ?? 0)) * FPS);
+const AUDIO_AT = 0.3; // seconds into the scene when the voice-over starts
 export const totalFrames = () => scenes.reduce((n, s) => n + frames(s), 0);
 
 const Bar = ({title}: {title: string}) => (
@@ -43,6 +45,98 @@ const ImageScene = ({s}: {s: Scene}) => {
     <AbsoluteFill style={{background: '#fff'}}>
       <Bar title={s.title} />
       <Img src={staticFile(`design/${s.image}`)} style={{position: 'absolute', top: 84, left: 0, width: 1920, height: 996, objectFit: 'contain', transform: `scale(${scale})`}} />
+      <Captions id={s.id} />
+      {s.repo ? <EndCard s={s} /> : null}
+    </AbsoluteFill>
+  );
+};
+
+
+// Word-timed captions: script words timed by whisper.cpp offsets (scripts/captions.py).
+const Captions = ({id}: {id: string}) => {
+  const f = useCurrentFrame();
+  const t = f / FPS - AUDIO_AT;
+  const ws = (captions as Record<string, {t: string; a: number; b: number}[]>)[id] ?? [];
+  if (!ws.length || t < 0) return null;
+  let cur = ws.findIndex((w) => t >= w.a && t < w.b);
+  if (cur < 0) cur = t >= ws[ws.length - 1].b ? -1 : 0;
+  if (cur < 0) return null;
+  const start = Math.floor(cur / 8) * 8;
+  const chunk = ws.slice(start, start + 8);
+  return (
+    <div style={{position: 'absolute', left: 140, right: 140, bottom: 36, textAlign: 'center', zIndex: 8}}>
+      <span style={{display: 'inline-block', background: 'rgba(0,0,0,0.72)', borderRadius: 12, padding: '10px 26px', fontFamily: font, fontSize: 42, color: '#cfd6e4'}}>
+        {chunk.map((w, k) => <span key={k} style={{color: start + k === cur ? '#ffd27a' : '#cfd6e4', fontWeight: start + k === cur ? 700 : 400}}>{w.t} </span>)}
+      </span>
+    </div>
+  );
+};
+
+const BOT = new Set(['clerk', 'byelaw', 'treasurer-agent', 'concierge', 'Switch']);
+const Msgs = ({m, t, last}: {m: Msg; t: number; last: boolean}) => {
+  const kind = m.kind ?? 'bot';
+  const bot = BOT.has(m.who);
+  const typingFrom = m.at - (m.typing ?? 0);
+  if (t < (kind === 'user' ? m.at : typingFrom)) return null;
+  if (kind === 'sys') {
+    return <div style={{margin: '4px 0 4px 74px', fontSize: 26, color: '#8a93a6', fontStyle: 'italic'}}>{m.who} {m.text}</div>;
+  }
+  const showTyping = kind !== 'user' && t < m.at;
+  const n = kind === 'user' ? Math.floor(Math.min(1, (t - m.at) / 0.8) * m.text.length) : m.text.length;
+  const pop = Math.min(1, Math.max(0, (t - m.at) / 0.25));
+  const col = kind === 'switch' ? '#ff9c94' : '#e8ebf2';
+  return (
+    <div style={{display: 'flex', gap: 18, margin: '10px 0', padding: '8px 12px', borderRadius: 10,
+      background: m.key && t >= m.at ? 'rgba(255,210,122,0.10)' : kind === 'switch' ? 'rgba(179,38,30,0.18)' : 'transparent',
+      borderLeft: m.key && t >= m.at ? '5px solid #ffd27a' : '5px solid transparent'}}>
+      <div style={{width: 52, height: 52, borderRadius: 26, background: bot ? '#2f5fb3' : '#3b8f5a', color: '#fff', fontSize: 26, fontWeight: 700,
+        display: 'flex', alignItems: 'center', justifyContent: 'center', flex: '0 0 52px'}}>{m.who[0].toUpperCase()}</div>
+      <div style={{flex: 1}}>
+        <div style={{fontSize: 26, fontWeight: 700, color: '#fff'}}>{m.who}{bot ? <span style={{fontSize: 18, border: '1px solid #8a93a6', color: '#8a93a6', borderRadius: 4, padding: '1px 6px', marginLeft: 10}}>BOT</span> : null}</div>
+        {showTyping ? <div style={{fontSize: 34, color: '#8a93a6', letterSpacing: 6}}>{'•'.repeat(1 + (Math.floor(t * 4) % 3))}</div> :
+          <div style={{fontSize: 32, color: col, whiteSpace: 'pre-wrap', opacity: kind === 'user' ? 1 : pop, fontFamily: m.key ? 'Menlo, monospace' : font}}>{m.text.slice(0, n)}</div>}
+      </div>
+    </div>
+  );
+};
+
+const ChatScene = ({s}: {s: Scene}) => {
+  const f = useCurrentFrame();
+  const t = f / FPS - AUDIO_AT;
+  const msgs = s.chat ?? [];
+  const proofAt = s.proof ? s.voiceSec + 0.6 : Infinity;
+  const showProof = f / FPS >= proofAt;
+  return (
+    <AbsoluteFill style={{background: '#14161b', fontFamily: font}}>
+      <Bar title={s.title} />
+      <div style={{position: 'absolute', top: 84, left: 0, right: 0, height: 64, background: '#1c1f26', display: 'flex', alignItems: 'center', padding: '0 48px', color: '#e8ebf2', fontSize: 30, fontWeight: 700, justifyContent: 'space-between'}}>
+        <span>{s.room === 'committee' ? '\u{1F512} ' : '\u{1F310} '}{s.room}</span>
+        <span style={{fontSize: 22, fontWeight: 400, color: '#8a93a6'}}>Recreated from the live Mattermost log</span>
+      </div>
+      <div style={{position: 'absolute', top: 160, left: 100, right: 100, height: 740, display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', overflow: 'hidden'}}>
+        {msgs.map((m, i) => <Msgs key={i} m={m} t={t} last={i === msgs.length - 1} />)}
+      </div>
+      {showProof && s.proof ? (
+        <AbsoluteFill style={{background: '#111', opacity: interpolate(f / FPS, [proofAt, proofAt + 0.4], [0, 1], {extrapolateRight: 'clamp'})}}>
+          <Img src={staticFile(`shots/${s.proof.src}`)} style={{position: 'absolute', top: 84, left: 0, width: 1920, height: 996, objectFit: 'contain'}} />
+          <div style={{position: 'absolute', top: 100, right: 40, background: '#2f5fb3', color: '#fff', borderRadius: 10, padding: '8px 18px', fontSize: 26, zIndex: 6}}>{s.proof.note}</div>
+          <Bar title={s.title} />
+        </AbsoluteFill>
+      ) : <Captions id={s.id} />}
+    </AbsoluteFill>
+  );
+};
+
+const EndCard = ({s}: {s: Scene}) => {
+  const f = useCurrentFrame();
+  const at = (s.voiceSec + 0.4) * FPS;
+  if (f < at) return null;
+  const o = interpolate(f, [at, at + 12], [0, 1], {extrapolateRight: 'clamp'});
+  return (
+    <AbsoluteFill style={{background: INK, opacity: o, fontFamily: font, color: '#fff', alignItems: 'center', justifyContent: 'center', zIndex: 20}}>
+      <div style={{fontSize: 110, fontWeight: 800}}>Society Room</div>
+      <div style={{fontSize: 36, color: '#9db8e8', margin: '20px 0 50px', maxWidth: 1400, textAlign: 'center'}}>Switch decides who may instruct. The engine decides what is allowed.</div>
+      <div style={{fontSize: 52, fontFamily: 'Menlo, monospace', color: '#ffd27a'}}>{s.repo}</div>
     </AbsoluteFill>
   );
 };
@@ -95,7 +189,7 @@ export const Demo = () => {
         const n = frames(s);
         const el = (
           <Sequence key={s.id} from={at} durationInFrames={n}>
-            {s.kind === 'text' ? <TextScene s={s} /> : s.kind === 'image' ? <ImageScene s={s} /> : <ShotsScene s={s} />}
+            {s.kind === 'text' ? <TextScene s={s} /> : s.kind === 'image' ? <ImageScene s={s} /> : s.kind === 'chat' ? <ChatScene s={s} /> : <ShotsScene s={s} />}
             <Sequence from={Math.round(0.3 * FPS)}><Audio src={staticFile(`audio/${s.id}.mp3`)} /></Sequence>
           </Sequence>
         );
