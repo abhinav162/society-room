@@ -75,4 +75,10 @@ Reproduce it with: `"$HOME/Library/Application Support/switchdash/local-switch-s
 
 ## Live replay (Stanley), pending
 
-Checks A1–A5 and B1–B6 were sent to Stanley on 2026-11-06. Results go here, with screenshots in `docs/adr/evidence/`.
+Cast agreed with the human on 2026-11-06:
+- Treasurer = Mattermost `user`, the Switch Console's own account. The Console is signed in as Switch user `admin`, who runs the template and so owns `treasurer-agent`.
+- Non-owner = Mattermost `abhinav`, unlinked.
+
+The code check covers both: the owner is allowed, and an unlinked account is refused. The only extra condition is that `user` is linked to `admin` (Console Home shows no "Link your Mattermost account").
+
+Checks A1 (abhinav), A3 (user) and B2/B6 (`!roles`) go here, with screenshots in `docs/adr/evidence/`.
