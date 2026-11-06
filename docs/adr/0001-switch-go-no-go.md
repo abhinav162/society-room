@@ -70,7 +70,14 @@ Reproduce it with: `"$HOME/Library/Application Support/switchdash/local-switch-s
 
 - `switch/society-room.yaml` (Stanley) is correct as it stands for `treasurer: addressing: owner`. Setup docs must say **"the Treasurer runs the template"** and **"every person links their Mattermost account"**.
 - The template needs a `meeting-chair` exclusive role in `committee`. If v2 templates cannot define roles, an agent defines it at kickoff.
-- `clerk` with `anyone_in: [committee]` lets any committee-room member, member-7 included, ask clerk things. That is acceptable: clerk only proposes, and the engine records the real votes by name against `members.yaml`.
+- **Revised 2026-11-06 after the live run.** `clerk` moves from `anyone_in: [committee]` to `addressing: owner`.
+  - **Live evidence.** Unlinked `abhinav` posted `@meeting-chair close the meeting`. Clerk received it, ran `status`, and only then refused in prose. That refusal was an LLM decision, not a Switch one.
+  - **Why `anyone_in` let it through.** The template runner turns `anyone_in` into a rule that names rooms only (`template_runs.py`: `AddressingRule(rooms=[…])`). Its users and agents stay `*`, so it admits any sender in the room, unlinked accounts included.
+  - **Why `owner` stops it.** `@meeting-chair` still goes through clerk's own policy. A role mention is one of the "addressed" paths: `recipient.py` runs `_compute_addressed` and then `_gate_addressed`, which calls `permitted()`. So with `owner`, Switch refuses `abhinav` before clerk sees the message.
+  - **No narrower option in the template.** Templates offer only `owner`, `owner-agents`, `anyone` and `anyone_in`. Admitting several named users needs Custom rules, set in Switch Console after the run.
+  - **Who plays whom.** The demo's one linked person, Mattermost `user`, plays both Chairman and Treasurer.
+  - **Second layer (dev-chair).** The CLI checks the chair (`--chair` on `open`, `--by` on `close` and `vote`) against `members.yaml`.
+- `byelaw` keeps `anyone_in: [committee]`. It only runs a read-only check, and an over-limit referral to the AGM is harmless whoever asks.
 - The demo needs at least 3 Mattermost accounts: Treasurer (deployer, linked), Chairman, member-7. Linking or leaving the Chairman and member-7 unlinked does not change beat 2. Either way they are refused.
 
 ## Live replay (Stanley), pending
