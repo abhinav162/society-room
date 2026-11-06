@@ -1,6 +1,6 @@
 # ADR 0001: Hour-1 Switch go/no-go
 
-- Status: Accepted. (b) is confirmed live (6 of 6). The treasurer-agent live lines are pending; (a) rests on code evidence until they land.
+- Status: Accepted. GO: (a) is confirmed live (2 of 2) and (b) is confirmed live (6 of 6).
 - Date: 2026-11-06
 - Deciders: Oscar (architect), Stanley (platform)
 - Switch version tested: switch-core **0.31.0**, the native server Switch Console runs locally (`~/Library/Application Support/switchdash/local-switch-server/native/switch-core/0.31.0`). Health `GET :63941/health` → `{"status":"ok"}`; Mattermost ping on :63942 → `OK`.
@@ -97,6 +97,15 @@ God read these messages through the Mattermost API, read-only.
 
 This confirms (b) live: the exclusive lease, `!roles`, `@role` routing to the holder, and the holder's addressing applied to `@role`.
 
-### treasurer-agent: pending
+### treasurer-agent: PASS, 2 of 2 (2026-11-06, main 9400e08, `#committee`)
 
-Still to run: abhinav `@treasurer-agent pay INV-068` (expect Switch's refusal); user, same message (expect `REFUSED no passed resolution for invoice INV-068`). The human posts these; results go here.
+| Time (IST) | Who | Message | Result |
+|---|---|---|---|
+| 22:33:25 | abhinav (unlinked) | `@treasurer-agent pay the lift AMC invoice INV-068, 68000` | Switch refuses in the same second: "I only take instructions from my owner, and this chat account isn't linked…". The agent never ran |
+| 22:33:52 | user (owner, Treasurer) | same message | after 29 s: `REFUSED no passed resolution for invoice INV-068` (thread: 6 tool calls, 5 done, 1 failed) |
+
+This confirms (a) live: the refusal of a non-owner comes from Switch addressing, and the gate refusal comes from the CLI.
+
+**Result: every PER-88 check passes live. The go/no-go is closed: GO.**
+
+Open item, not a blocker: one of the agent's 6 tool calls failed, though the final answer was right. Check the session log before recording the demo.
