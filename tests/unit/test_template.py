@@ -48,6 +48,11 @@ def test_treasurer_agent_is_owner_only():
     assert load()["treasurer_agent"]["addressing"] == "owner"
 
 
+def test_treasurer_books_with_dash_instead_of_asking_for_a_resolution():
+    # Live run: with no resolution named, the agent asked first; the CLI's refusal is the answer.
+    assert "`-` when the message names none" in load()["treasurer_agent"]["instructions"]
+
+
 def test_room_membership():
     res = load()
     assert set(res["committee"]["agents"]) == {"clerk", "treasurer_agent", "byelaw"}
