@@ -26,7 +26,7 @@ flowchart LR
   subgraph SW["Switch server 0.31 (local)"]
     R1["room: committee<br/>role meeting-chair (exclusive)"]
     R2["room: general-body"]
-    AP["addressing policies<br/>treasurer-agent = owner only"]
+    AP["addressing policies<br/>treasurer-agent, clerk = owner only"]
   end
   subgraph AG["Agents (Claude Code sessions, Switch Console)"]
     CL[clerk]
@@ -67,7 +67,7 @@ flowchart LR
 | Agent | Room | Addressing (who may instruct it) | May run | Must never |
 |---|---|---|---|---|
 | `treasurer-agent` | committee | `owner`: the Treasurer, who runs the template (ADR 0001). Everyone else gets Switch's refusal | `society book`, `society status` | book without the CLI saying OK; book anything on its own initiative |
-| `clerk` | committee | `owner`: the template runner, the demo's Chairman and Treasurer (ADR 0001, revised). The CLI also checks `--chair`/`--by` | take/drop role `meeting-chair`; `society meeting open/close`, `society vote`, `society minutes` | count quorum or tally votes itself |
+| `clerk` | committee | `owner`: the template runner, the demo's Chairman and Treasurer (ADR 0001, revised). Outsiders are refused by Switch | take/drop role `meeting-chair`; `society meeting open --chair`, `society meeting close --by`, `society vote --by`, passing the sender's Mattermost username | count quorum or tally votes itself |
 | `byelaw` | committee | `anyone_in: [committee]` | `society check <invoice>` (limit check; refers to AGM) | approve an amount the CLI refers |
 | `concierge` | general-body | `anyone_in: [general_body]` | read `room/` published files; `society agenda add` for questions it cannot answer | answer without citing a file line; write any other file |
 
@@ -76,8 +76,8 @@ Agents in `committee` cannot instruct `treasurer-agent`: they are not owned by t
 ## 5. Roles and leases
 
 - One role: **`meeting-chair`**, exclusive, in `committee`. Brief: *"You are running a committee meeting. Use `society meeting`/`vote` for every count. Drop the role when the meeting closes."*
-- Flow: the Chairman says `@clerk open a meeting`. Clerk takes `meeting-chair` and runs `society meeting open --present …`. `!roles` now shows `meeting-chair: clerk`. When the meeting closes, clerk runs `society meeting close` and drops the role.
-- **The lease is a signal, not the record.** It disappears when the session stops (ADR 0001, Limit 4). `meeting.json` is the record: the engine refuses a `vote` when no meeting is open or when quorum was not met.
+- Flow: the Chairman says `@clerk open a meeting`. Clerk takes `meeting-chair` and runs `society meeting open --present … --chair <username>`, recording the sender as chair. `!roles` now shows `meeting-chair: clerk`. When the meeting closes, clerk runs `society meeting close --by <username>` and drops the role.
+- **The lease is a signal, not the record.** It disappears when the session stops (ADR 0001, Limit 4). `meeting.json` is the record: the engine refuses a `vote` when no meeting is open or when quorum was not met, and refuses `vote` or `meeting close` from anyone but the recorded chair.
 - Humans do not hold Switch roles. Chairman, Secretary and Treasurer are roles in `members.yaml` (the engine's roster). The Treasurer is also, in Switch, the owner of `treasurer-agent`.
 
 ## 6. Data files (all in `room/`)
@@ -87,7 +87,7 @@ Agents in `committee` cannot instruct `treasurer-agent`: they are not owned by t
 | `byelaws.yaml` | seed | humans | bye-law 156 tiers (25 / 50 / ∞ members → ₹25k / 50k / 1L), quorum rule (2/3 or 20, lower). No number appears in prompts (B1-4) |
 | `members.yaml` | seed | humans | 60 fictional members: `id`, `name`, `flat`, `role` (chairman / secretary / treasurer / member); `member-7` included |
 | `invoices/INV-*.md` | seed | humans | invoice id, vendor, item, amount (₹68,000 lift AMC; ₹4,00,000 repainting) |
-| `meeting.json` | state | engine | `{open, opened_at, present:[ids], quorum_needed, quorate}` |
+| `meeting.json` | state | engine | `{open, opened_at, present:[ids], quorum_needed, quorate, chair}` |
 | `resolutions.jsonl` | record, append-only | engine | one JSON per passed motion: `id`, `motion`, `invoice_id`, `votes:{member: aye/nay/abstain}`, `tally`, `ts`, `prev_hash`, `hash` (the hash chain is cut list #3) |
 | `minutes.md` | record, append-only | engine (agent supplies prose) | one entry per meeting event, with the resolution id |
 | `ledger.md` | record, append-only | engine `book` only | `date · invoice · amount · resolution · byelaw OK · PAID, mock UPI ref` |

@@ -45,15 +45,22 @@ def meeting_open(room, args):
         "present": present,
         "quorum_needed": needed,
         "quorate": True,
+        "chair": args.chair,
     }
     (room / "meeting.json").write_text(json.dumps(meeting, indent=2) + "\n")
-    return f"meeting open: {len(present)} present, {needed} needed"
+    return f"meeting open: {len(present)} present, {needed} needed, chair {args.chair}"
+
+
+def _chair_only(meeting, by, action):
+    if by != meeting.get("chair"):
+        raise Refused(f"only the chair {meeting.get('chair')} may {action}")
 
 
 def meeting_close(room, args):
     meeting = _meeting(room)
     if not meeting["open"]:
         raise Refused("no open meeting")
+    _chair_only(meeting, args.by, "close the meeting")
     (room / "meeting.json").write_text(json.dumps({**meeting, "open": False}, indent=2) + "\n")
     return "meeting closed"
 
@@ -62,6 +69,7 @@ def vote(room, args):
     meeting = _meeting(room)
     if not (meeting["open"] and meeting.get("quorate")):
         raise Refused("no open quorate meeting")
+    _chair_only(meeting, args.by, "record votes")
     try:
         votes = parse_votes(args.votes)
     except ValueError as e:
@@ -122,13 +130,17 @@ def _parser():
     meeting = sub.add_parser("meeting").add_subparsers(dest="action", required=True)
     o = meeting.add_parser("open")
     o.add_argument("--present", required=True)
+    o.add_argument("--chair", required=True, help="Mattermost username of the chair")
     o.set_defaults(run=meeting_open)
-    meeting.add_parser("close").set_defaults(run=meeting_close)
+    c = meeting.add_parser("close")
+    c.add_argument("--by", required=True, help="Mattermost username of the sender")
+    c.set_defaults(run=meeting_close)
 
     v = sub.add_parser("vote")
     v.add_argument("--invoice", required=True)
     v.add_argument("--motion", required=True)
     v.add_argument("--votes", required=True)
+    v.add_argument("--by", required=True, help="Mattermost username of the sender")
     v.set_defaults(run=vote)
 
     c = sub.add_parser("check")

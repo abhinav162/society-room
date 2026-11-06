@@ -67,3 +67,10 @@ def test_template_lints_clean():
 def test_clerk_vote_example_uses_the_cli_vote_words():
     text = load()["clerk"]["instructions"]
     assert "=aye" in text and "=nay" in text and "=yes" not in text
+
+
+def test_clerk_is_owner_only_and_passes_the_sender_as_chair():
+    # PER-88: Switch refuses outsiders before the clerk sees them; the CLI checks the chair.
+    clerk = load()["clerk"]
+    assert clerk["addressing"] == "owner"
+    assert "--chair" in clerk["instructions"] and "--by" in clerk["instructions"]
