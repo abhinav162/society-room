@@ -1,0 +1,16 @@
+PASS owner_only: Treasurer -> treasurer-agent -> allowed
+PASS owner_only: member-7 -> treasurer-agent -> refused
+PASS owner_only: Chairman -> treasurer-agent -> refused
+PASS owner_only: unlinked chat account -> treasurer-agent -> refused
+PASS owner_only: clerk agent (owned by Chairman) -> treasurer-agent -> refused
+PASS owner_only: platform -> treasurer-agent -> refused
+PASS default (owner+owner_agents): Treasurer -> treasurer-agent -> allowed
+PASS default (owner+owner_agents): member-7 -> treasurer-agent -> refused
+PASS default (owner+owner_agents): Chairman -> treasurer-agent -> refused
+PASS default (owner+owner_agents): unlinked chat account -> treasurer-agent -> refused
+PASS default (owner+owner_agents): clerk agent (owned by Chairman) -> treasurer-agent -> refused
+PASS default (owner+owner_agents): platform -> treasurer-agent -> refused
+PASS custom users=[Treasurer]: Treasurer -> allowed
+PASS custom users=[Treasurer]: member-7 -> refused
+PASS custom users=[Treasurer]: Treasurer in general-body -> refused
+ALL PASS
