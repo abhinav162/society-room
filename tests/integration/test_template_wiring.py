@@ -59,3 +59,13 @@ def test_agent_command_prefix_runs_from_another_directory(tmp_path):
     cmd = cmd.replace("<command>", "status")
     p = subprocess.run(cmd, shell=True, cwd=tmp_path, capture_output=True, text=True, check=False)
     assert p.stdout.startswith("OK "), p.stdout + p.stderr
+
+
+@pytest.mark.parametrize("agent", ["clerk", "treasurer_agent", "byelaw"])
+def test_a_refusal_is_not_a_failed_tool_call(agent, tmp_path):
+    # Claude Code shows a non-zero exit as a failed tool call; REFUSED is an answer, not a failure.
+    # Real room/ (the prefix needs the repo), but a refused book writes nothing.
+    cmd = load()[agent]["instructions"].split("`")[1].replace("{room_dir}", str(ROOM.resolve()))
+    cmd = cmd.replace("<command>", "book INV-068 -")
+    p = subprocess.run(cmd, shell=True, cwd=tmp_path, capture_output=True, text=True, check=False)
+    assert (p.returncode, p.stdout.strip()) == (0, "REFUSED no passed resolution for invoice INV-068")
