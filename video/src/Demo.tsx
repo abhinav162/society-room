@@ -78,8 +78,8 @@ const Msgs = ({m, t, last}: {m: Msg; t: number; last: boolean}) => {
   const bot = BOT.has(m.who);
   const typingFrom = m.at - (m.typing ?? 0);
   if (t < (kind === 'user' ? m.at : typingFrom)) return null;
-  if (kind === 'sys') {
-    return <div style={{margin: '4px 0 4px 74px', fontSize: 26, color: '#8a93a6', fontStyle: 'italic'}}>{m.who} {m.text}</div>;
+  if (kind === 'lease') {
+    return <div style={{margin: '6px 0 6px 74px', alignSelf: 'flex-start', fontSize: 26, color: '#ffd27a', border: '1px solid #ffd27a', borderRadius: 20, padding: '4px 18px'}}>Switch role lease: {m.who} {m.text}</div>;
   }
   const showTyping = kind !== 'user' && t < m.at;
   const n = kind === 'user' ? Math.floor(Math.min(1, (t - m.at) / 0.8) * m.text.length) : m.text.length;
@@ -106,19 +106,21 @@ const ChatScene = ({s}: {s: Scene}) => {
   const msgs = s.chat ?? [];
   const proofAt = s.proof ? s.voiceSec + 0.6 : Infinity;
   const showProof = f / FPS >= proofAt;
+  const pz = s.proof ? interpolate(f / FPS, [proofAt, proofAt + 3], [s.proof.zoom.s * 0.8, s.proof.zoom.s], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'}) : 1;
   return (
     <AbsoluteFill style={{background: '#14161b', fontFamily: font}}>
       <Bar title={s.title} />
       <div style={{position: 'absolute', top: 84, left: 0, right: 0, height: 64, background: '#1c1f26', display: 'flex', alignItems: 'center', padding: '0 48px', color: '#e8ebf2', fontSize: 30, fontWeight: 700, justifyContent: 'space-between'}}>
         <span>{s.room === 'committee' ? '\u{1F512} ' : '\u{1F310} '}{s.room}</span>
-        <span style={{fontSize: 22, fontWeight: 400, color: '#8a93a6'}}>Recreated from the live Mattermost log</span>
+        <span style={{fontSize: 22, fontWeight: 400, color: '#8a93a6'}}>Replayed from the live Mattermost log</span>
       </div>
       <div style={{position: 'absolute', top: 160, left: 100, right: 100, height: 740, display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', overflow: 'hidden'}}>
         {msgs.map((m, i) => <Msgs key={i} m={m} t={t} last={i === msgs.length - 1} />)}
       </div>
       {showProof && s.proof ? (
         <AbsoluteFill style={{background: '#111', opacity: interpolate(f / FPS, [proofAt, proofAt + 0.4], [0, 1], {extrapolateRight: 'clamp'})}}>
-          <Img src={staticFile(`shots/${s.proof.src}`)} style={{position: 'absolute', top: 84, left: 0, width: 1920, height: 996, objectFit: 'contain'}} />
+          <Img src={staticFile(`shots/${s.proof.src}`)} style={{position: 'absolute', top: 84, left: 0, width: 1920, height: 996, objectFit: 'contain',
+            transformOrigin: '0 0', transform: `translate(${960 - (s.proof.zoom.x / 100) * 1920 * pz}px, ${498 - (s.proof.zoom.y / 100) * 996 * pz}px) scale(${pz})`}} />
           <div style={{position: 'absolute', top: 100, right: 40, background: '#2f5fb3', color: '#fff', borderRadius: 10, padding: '8px 18px', fontSize: 26, zIndex: 6}}>{s.proof.note}</div>
           <Bar title={s.title} />
         </AbsoluteFill>
@@ -153,7 +155,7 @@ const ShotView = ({shot, len}: {shot: Shot; len: number}) => {
         <Img src={staticFile(`shots/${shot.src}`)} style={{width: 1920, height: 830, objectFit: 'contain', transformOrigin: `${z.cx}% ${z.cy}%`, transform: `scale(${k})`}} />
       </div>
       {shot.caption ? (
-        <div style={{position: 'absolute', left: 80, right: 80, bottom: 28, background: 'rgba(20,20,20,0.88)', border: `2px solid ${BLUE}`, borderRadius: 14,
+        <div style={{position: 'absolute', left: 80, right: 80, bottom: 130, background: 'rgba(20,20,20,0.88)', border: `2px solid ${BLUE}`, borderRadius: 14,
           padding: '18px 28px', fontFamily: font, color: '#fff', fontSize: 30}}>
           {shot.who ? <span style={{color: '#9db8e8', fontWeight: 700, marginRight: 16}}>{shot.who}</span> : null}
           <span style={{fontFamily: 'Menlo, monospace'}}>{shot.caption.slice(0, typed)}</span>
@@ -177,6 +179,40 @@ const ShotsScene = ({s}: {s: Scene}) => {
         return el;
       })}
       <Bar title={s.title} />
+      <Captions id={s.id} />
+    </AbsoluteFill>
+  );
+};
+
+const CardsScene = ({s}: {s: Scene}) => {
+  const f = useCurrentFrame();
+  const t = f / FPS - AUDIO_AT;
+  return (
+    <AbsoluteFill style={{background: INK, fontFamily: font, color: '#fff', padding: '110px 150px', justifyContent: 'center'}}>
+      {(s.cards ?? []).map((c, i) => {
+        const o = interpolate(t, [c.at, c.at + 0.5], [0, 1], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'});
+        return <div key={i} style={{fontSize: 76, fontWeight: 800, lineHeight: 1.2, margin: '26px 0', opacity: o, transform: `translateY(${(1 - o) * 30}px)`, color: c.hi ? '#ffd27a' : '#fff'}}>{c.text}</div>;
+      })}
+      <Captions id={s.id} />
+    </AbsoluteFill>
+  );
+};
+
+const EndScene = ({s}: {s: Scene}) => {
+  const f = useCurrentFrame();
+  const t = f / FPS - AUDIO_AT;
+  const lines = s.built ?? [];
+  return (
+    <AbsoluteFill style={{background: INK, fontFamily: font, color: '#fff', padding: '90px 140px'}}>
+      <div style={{fontSize: 96, fontWeight: 800}}>Built on Switch</div>
+      <div style={{fontSize: 34, color: '#9db8e8', margin: '10px 0 44px'}}>Switch decides who may instruct; the engine decides what is allowed.</div>
+      {lines.map((l, i) => {
+        const at = 1.2 + i * 1.5;
+        const o = interpolate(t, [at, at + 0.4], [0, 1], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'});
+        return <div key={i} style={{fontSize: 40, margin: '14px 0', opacity: o, color: '#e8ebf2'}}><span style={{color: '#ffd27a'}}>{'\u25c6'} </span>{l}</div>;
+      })}
+      <div style={{position: 'absolute', left: 140, bottom: 150, fontSize: 56, fontFamily: 'Menlo, monospace', color: '#ffd27a', opacity: interpolate(t, [s.voiceSec, s.voiceSec + 0.6], [0, 1], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'})}}>{s.repo}</div>
+      <Captions id={s.id} />
     </AbsoluteFill>
   );
 };
@@ -189,7 +225,7 @@ export const Demo = () => {
         const n = frames(s);
         const el = (
           <Sequence key={s.id} from={at} durationInFrames={n}>
-            {s.kind === 'text' ? <TextScene s={s} /> : s.kind === 'image' ? <ImageScene s={s} /> : s.kind === 'chat' ? <ChatScene s={s} /> : <ShotsScene s={s} />}
+            {s.kind === 'text' ? <TextScene s={s} /> : s.kind === 'image' ? <ImageScene s={s} /> : s.kind === 'chat' ? <ChatScene s={s} /> : s.kind === 'cards' ? <CardsScene s={s} /> : s.kind === 'end' ? <EndScene s={s} /> : <ShotsScene s={s} />}
             <Sequence from={Math.round(0.3 * FPS)}><Audio src={staticFile(`audio/${s.id}.mp3`)} /></Sequence>
           </Sequence>
         );
