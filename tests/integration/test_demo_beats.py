@@ -1,7 +1,6 @@
 """The demo, beats B2-B5, driven only through the CLI as the agents would run it."""
 
 import json
-import shutil
 import subprocess
 import sys
 from pathlib import Path
@@ -30,8 +29,8 @@ def lines(path):
     return [x for x in path.read_text().splitlines() if x.strip()] if path.exists() else []
 
 
-def test_demo_beats_b2_to_b5(tmp_path):
-    room = shutil.copytree(ROOM, tmp_path / "room")
+def test_demo_beats_b2_to_b5(seed_room):
+    room = seed_room
     ledger = room / "ledger.md"
 
     # B2: no resolution, no payment.

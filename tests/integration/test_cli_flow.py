@@ -1,5 +1,4 @@
 import json
-import shutil
 import subprocess
 import sys
 from pathlib import Path
@@ -14,8 +13,8 @@ TIED = "member-1=aye,member-2=aye,member-3=nay,member-4=nay"
 
 
 @pytest.fixture
-def room(tmp_path):
-    return shutil.copytree(ROOM, tmp_path / "room")
+def room(seed_room):
+    return seed_room
 
 
 def run(room, *argv):

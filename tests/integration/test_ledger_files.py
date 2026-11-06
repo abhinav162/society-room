@@ -1,4 +1,3 @@
-import shutil
 from pathlib import Path
 
 from society_room.ledger import book, verify
@@ -7,8 +6,8 @@ from society_room.records import append_resolution
 ROOM = Path(__file__).parents[2] / "room"
 
 
-def test_refusals_then_booking_on_room_copy(tmp_path):
-    room = Path(shutil.copytree(ROOM, tmp_path / "room"))
+def test_refusals_then_booking_on_room_copy(seed_room):
+    room = seed_room
     ledger = room / "ledger.md"
     votes = {f"member-{i}": "aye" for i in range(1, 21)}
 

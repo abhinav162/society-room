@@ -1,4 +1,3 @@
-import shutil
 from pathlib import Path
 
 import pytest
@@ -11,8 +10,8 @@ AYES = {"member-1": "aye", "member-2": "aye", "member-4": "nay"}
 
 
 @pytest.fixture
-def room(tmp_path):
-    return Path(shutil.copytree(ROOM, tmp_path / "room"))
+def room(seed_room):
+    return seed_room
 
 
 def resolve(room, invoice_id, present=20):

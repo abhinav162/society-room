@@ -1,5 +1,3 @@
-import shutil
-from pathlib import Path
 
 import pytest
 
@@ -34,8 +32,8 @@ def test_inr_groups_indian_style():
     ]
 
 
-def test_book_and_verify_print_the_ledger_line_once(tmp_path, capsys):
-    room = shutil.copytree(Path(__file__).parents[2] / "room", tmp_path / "room")
+def test_book_and_verify_print_the_ledger_line_once(seed_room, capsys):
+    room = seed_room
     assert main(["--room", str(room), "book", "INV-068", "-"]) == 1
     assert capsys.readouterr().out == "REFUSED no passed resolution for invoice INV-068\n"
     assert main(["--room", str(room), "verify"]) == 0

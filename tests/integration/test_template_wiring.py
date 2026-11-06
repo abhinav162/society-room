@@ -1,4 +1,3 @@
-import shutil
 import subprocess
 import sys
 from pathlib import Path
@@ -41,9 +40,9 @@ CASES = [
 
 
 @pytest.mark.parametrize("agent,cmd", CASES)
-def test_instructed_command_exists(agent, cmd, tmp_path):
+def test_instructed_command_exists(agent, cmd, seed_room):
     assert cmd in load()[agent]["instructions"]
-    room = shutil.copytree(ROOM, tmp_path / "room")
+    room = seed_room
     run = subprocess.run(
         [sys.executable, "-m", "society_room", "--room", str(room), *cmd.split(), "--help"],
         check=False,
