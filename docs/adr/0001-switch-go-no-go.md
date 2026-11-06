@@ -108,4 +108,4 @@ This confirms (a) live: the refusal of a non-owner comes from Switch addressing,
 
 **Result: every PER-88 check passes live. The go/no-go is closed: GO.**
 
-Open item, not a blocker: one of the agent's 6 tool calls failed, though the final answer was right. Check the session log before recording the demo.
+Resolved: the failed tool call was `book INV-068 -` exiting 1 on `REFUSED`, which Claude Code shows as a failed call. Fixed in main 052cfb5: the agents' CLI line ends in `; true`, so the agent sees exit 0 plus the `REFUSED` line, and a test covers this for clerk, treasurer-agent and byelaw. The CLI itself still exits 1.
