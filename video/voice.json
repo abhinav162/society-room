@@ -1,10 +1,14 @@
 {
- "hook": "A resident says 'just pay it'. Switch itself stops the message: the agent never sees it.",
- "opening": "Housing society committees are unpaid volunteers who sign for crores. Registrars dissolve those who cannot show a recorded resolution. Society Room checks they had the right to pay.",
- "b1": "One template creates both rooms and four agents. Switch decides who may instruct each one.",
- "b2": "Even the Treasurer is refused: no passed resolution.",
- "b3": "The Chairman opens the meeting; the clerk counts quorum, 20 needed, 41 present, and records the vote by name. Only now does the treasurer book: invoice, resolution and bye-law check, all three.",
- "b4": "A Rs 4 lakh bid is over the bye-law 156 limit. Even a vote cannot approve it: it goes to the General Body agenda.",
- "b5": "In the General Body room a member asks why the society paid the lift contractor. The concierge answers only from the published ledger and minutes, and cites them.",
- "closing": "Switch decides who may instruct; the engine decides what is allowed. Same ledger the auditor signs."
+ "s1": "One message.",
+ "s2": "A society treasurer is an unpaid volunteer who signs for the society's money. When the registrar asks for the resolution behind a payment and there is none, the volunteer who signed is answerable.",
+ "s3": "Resident apps log who approved it. Society Room proves they had the right to.",
+ "s4": "Same message, into Society Room. Switch refuses it before the treasurer agent sees it. Not a prompt: addressing, enforced by the platform.",
+ "s5": "One template creates both rooms and four agents. The treasurer agent takes instructions from its owner only. Fifteen of fifteen addressing checks pass.",
+ "s6": "Even the Treasurer is refused. No passed resolution for this invoice.",
+ "s7": "The Chairman opens a meeting. The clerk takes the exclusive meeting-chair role, counts quorum, forty-one present, twenty needed, and records each vote by name. R-001 passes four to one, and the role is released.",
+ "s8": "Now, and only now, the treasurer agent books it: invoice, resolution and bye-law check, all three.",
+ "s9": "This is what the auditor signs. The ledger line cites the invoice and the resolution. The resolution records who voted. The bye-law sets the limit.",
+ "s10": "A four-lakh repainting bid is over the limit for a society this size. The committee cannot approve it, even by vote. It goes to the General Body.",
+ "s11": "In the residents' room a member asks why the lift cost sixty-eight thousand. The concierge answers only from the published records, and cites them.",
+ "s12": "Switch decides who may instruct. The engine decides what is allowed. Same ledger the auditor signs."
 }
