@@ -50,7 +50,7 @@ flowchart LR
 
 - **Switch Console + local server + Mattermost**: rooms, linked rooms, addressing, role leases, agent sessions. Set up by Stanley (`docs/setup.md`).
 - **One template**, `switch/society-room.yaml`: creates both rooms, the group link and four agents. The kickoff tells `clerk` to define the `meeting-chair` role, because the v2 template has no field for roles.
-- **`society` CLI** (`society_room/`, Python, run with `uv run society …`): the rules engine and the only writer of the data files. Every command prints one line, `OK …` or `REFUSED <reason>`, and exits 0 or 1. Agents run it through their shell and relay its output word for word.
+- **`society` CLI** (`society_room/`, Python, run as `uv run python -m society_room [--room DIR] <cmd>`; this doc writes `society <cmd>` for short): the rules engine and the only writer of the data files. Every command prints one line, `OK …` or `REFUSED <reason>`, and exits 0 or 1. Agents run it through their shell and relay its output word for word.
 - **`room/`**: plain files in the repo. Seed files are committed. Records start empty and grow only through the CLI. Agents get the absolute path from the template's `room_dir` param.
 
 ## 3. Rooms
@@ -88,7 +88,7 @@ Agents in `committee` cannot instruct `treasurer-agent`: they are not owned by t
 | `members.yaml` | seed | humans | 60 fictional members: `id`, `name`, `flat`, `role` (chairman / secretary / treasurer / member); `member-7` included |
 | `invoices/INV-*.md` | seed | humans | invoice id, vendor, item, amount (₹68,000 lift AMC; ₹4,00,000 repainting) |
 | `meeting.json` | state | engine | `{open, opened_at, present:[ids], quorum_needed, quorate}` |
-| `resolutions.jsonl` | record, append-only | engine | one JSON per passed motion: `id`, `motion`, `invoice_id`, `votes:{member: yes/no}`, `tally`, `ts`, `prev_hash`, `hash` (the hash chain is cut list #3) |
+| `resolutions.jsonl` | record, append-only | engine | one JSON per passed motion: `id`, `motion`, `invoice_id`, `votes:{member: aye/nay/abstain}`, `tally`, `ts`, `prev_hash`, `hash` (the hash chain is cut list #3) |
 | `minutes.md` | record, append-only | engine (agent supplies prose) | one entry per meeting event, with the resolution id |
 | `ledger.md` | record, append-only | engine `book` only | `date · invoice · amount · resolution · byelaw OK · PAID, mock UPI ref` |
 | `agenda.md` | record, append-only | engine | AGM items: over-limit spends, residents' unanswered questions |

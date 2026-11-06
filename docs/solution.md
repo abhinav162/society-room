@@ -1,5 +1,7 @@
 # Society Room: solution map
 
+`society <cmd>` below is short for `uv run python -m society_room [--room DIR] <cmd>`.
+
 How each PRD criterion (`docs/prd.md` §5) is delivered: by which Switch feature, by which engine command (`society_room`, ADR 0002) and in which file. Switch behaviour is verified on 0.31.0 (ADR 0001). "Test" names the check Dwight's task must automate.
 
 ## Switch features used
@@ -29,7 +31,7 @@ How each PRD criterion (`docs/prd.md` §5) is delivered: by which Switch feature
 | B2-4 | — | — | `ledger.md` | unit: unchanged after refusals |
 | B3-1 | `@clerk`, **exclusive lease `meeting-chair`**, `!roles` | `society meeting open --present <ids…>` | `meeting.json` | unit: 60 members → quorum 20; live: `!roles` shows clerk |
 | B3-2 | — | same, with 19 present → `REFUSED quorum not met (19/20)` | `meeting.json` | unit: 19 refused, 20 passes |
-| B3-3 | clerk records votes by name from chat | `society vote --motion … --invoice INV-068 --yes <ids> --no <ids>` | — | unit: simple majority of votes cast; vote refused when no meeting is open; voter must be present |
+| B3-3 | clerk records votes by name from chat | `society vote --motion … --invoice INV-068 --aye <ids> --nay <ids> --abstain <ids>` | — | unit: passes when ayes > nays; abstentions are not votes cast (records.tally); vote refused when no meeting is open; voter must be present |
 | B3-4 | — | (part of `vote`) | `resolutions.jsonl`, `minutes.md` | unit: one line each, with resolution id and tally |
 | B3-5 | Treasurer instructs treasurer-agent | `society book INV-068 R-001` → `OK booked … PAID, mock UPI ref` | `ledger.md` | unit: each missing piece refuses with its reason; all present → exactly one line |
 | B4-1 | `@byelaw` | `society check INV-400` → `REFUSED over bye-law 156 limit ₹1,00,000 (51+ members); referred to AGM` | — | unit |
@@ -55,4 +57,4 @@ How each PRD criterion (`docs/prd.md` §5) is delivered: by which Switch feature
 
 - **#8, template**: add a `room_dir` param (type `directory`) to every agent's instructions. Add a kickoff to committee: `@clerk define an exclusive role meeting-chair …`. The kickoff speaks as the deployer, so clerk's `anyone_in` admits it. Keep `treasurer: addressing: owner`, and state in setup that **the Treasurer runs the template**.
 - **#5, #7, #6**: build them as CLI commands with the exact output strings above. The agents relay them, so the strings are the demo script.
-- **#9**: each agent's instructions are three lines at most. For example: "Run `uv run society …` for every number or decision; post its output verbatim; never edit room/ yourself."
+- **#9**: each agent's instructions are three lines at most. For example: "Run `uv run python -m society_room --room <room_dir> …` for every number or decision; post its output verbatim; never edit room/ yourself."
