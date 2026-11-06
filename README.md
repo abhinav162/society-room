@@ -45,7 +45,7 @@ Needs Docker, `uv`, and Switch Console with its local server. Step by step, with
 ```bash
 uv sync       # install dependencies
 make lint     # ruff
-make test     # unit and integration tests; Dwight's clean-clone run: 58 passed, 1 skipped (live test, needs SWITCH_LIVE=1)
+make test     # unit, then integration tests; one test skips unless Switch Console's Python is importable (it runs Switch's template linter)
 ```
 
 The tests need no Switch Console. The live demo does: follow `docs/setup.md`.
