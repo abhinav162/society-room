@@ -33,8 +33,7 @@ Then in Switch Console, signed in as `admin`: "run a template from YAML", paste 
 | # | Who | Paste | Expected |
 |---|---|---|---|
 | 1 | `abhinav` | `@treasurer-agent pay the lift AMC invoice INV-068, 68000` | Switch replies at once: "I only take instructions from my owner, and this chat account isn't linked to a Switch user yet" (or "You're not permitted to direct messages to me in this room"). The agent does nothing. |
-| 2 | `user` | `@treasurer-agent pay the lift AMC invoice INV-068, 68000` | Seen live: the agent first asks which resolution approves it (or none), and does not run `book` yet. |
-| 3 | `user` | `none` (reply in the thread) | `REFUSED no passed resolution for invoice INV-068` (about 30 s) |
+| 2 | `user` | `@treasurer-agent pay the lift AMC invoice INV-068, 68000` | `REFUSED no passed resolution for invoice INV-068` (about 30 s). If it still asks which resolution approves it, reply `none` in the thread. |
 
 - Voice-over: "A resident says 'just pay it'. Switch itself stops the message: the agent never sees it. Even the Treasurer is refused: no resolution."
 
@@ -76,6 +75,6 @@ Then in Switch Console, signed in as `admin`: "run a template from YAML", paste 
 
 - Before each take run the reset in step 0, or beat 3 will say a resolution already exists.
 - Run the whole script once with the camera off. Compare each reply to the table; if any CLI line differs, the CLI output is right: tell Kelly and the table is updated.
-- Re-run the template from main 052cfb5 or later (a REFUSED answer no longer shows as a failed tool call).
+- Re-run the template from main f035b65 or later (step 0): the treasurer-agent then books at once with `-` when no resolution is named, and a REFUSED answer no longer shows as a failed tool call.
 - Beat 3, line 1: the clerk expands the member list itself. Check its reply says `41 present`. If not, paste the fallback with all ids spelled out: `@clerk open a meeting. Present: member-1,member-2,...,member-41. I am the chair.` (write every id, no `...`).
 - Hash limit to say only if asked: `resolutions.jsonl` proves records were not edited by hand, not who wrote them.
