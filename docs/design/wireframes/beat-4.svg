@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1100" height="680" viewBox="0 0 1100 680" font-family="Helvetica,Arial,sans-serif" font-size="13">
+<rect width="1100" height="680" fill="#fff"/>
+<rect width="1100" height="44" fill="#222"/>
+<text x="16" y="28" fill="#fff" font-size="16" font-weight="bold">Beat 4: Rs 4 lakh bid goes to the AGM</text>
+<text x="1084" y="28" fill="#bbb" text-anchor="end">Bye-law 156 cap enforced in code</text>
+<rect y="44" width="190" height="606" fill="#f3f3f3"/>
+<text x="14" y="72" font-weight="bold">Society Room</text>
+<text x="14" y="90" fill="#777" font-size="11">Shanti Nagar CHS (fictional)</text>
+<rect x="6" y="104" width="178" height="24" rx="4" fill="#dcdcdc"/>
+<text x="16" y="120" font-weight="bold">#committee</text><text x="176" y="120" fill="#777" font-size="10" text-anchor="end">private</text>
+<text x="16" y="152" font-weight="normal">#general-body</text><text x="176" y="152" fill="#777" font-size="10" text-anchor="end">linked</text>
+<text x="16" y="184" font-weight="normal">#vendors</text><text x="176" y="184" fill="#777" font-size="10" text-anchor="end">cut candidate</text>
+<text x="206" y="72" font-weight="bold" font-size="15">#committee</text>
+<line x1="190" y1="84" x2="830" y2="84" stroke="#ccc"/>
+<circle cx="220" cy="118" r="13" fill="#999"/><text x="220" y="123" fill="#fff" text-anchor="middle" font-size="12">S</text>
+<text x="242" y="116" font-weight="bold">Secretary</text>
+<rect x="320" y="105" width="73" height="15" rx="3" fill="none" stroke="#777"/><text x="325" y="116" font-size="10" fill="#777">SECRETARY</text>
+<text x="242" y="134" fill="#222">Repainting bid: Rs 4,00,000 from Rangoli Paints. Committee to approve?</text>
+<circle cx="220" cy="164" r="13" fill="#2f5fb3"/><text x="220" y="169" fill="#fff" text-anchor="middle" font-size="12">B</text>
+<text x="242" y="162" font-weight="bold">byelaw</text>
+<rect x="296" y="151" width="45" height="15" rx="3" fill="none" stroke="#2f5fb3"/><text x="301" y="162" font-size="10" fill="#2f5fb3">AGENT</text>
+<text x="242" y="180" fill="#222">Cannot approve. Bye-law 156: committee limit is Rs 1,00,000 for</text>
+<text x="242" y="196" fill="#222">societies with 51+ members. Rs 4,00,000 exceeds it.</text>
+<circle cx="220" cy="226" r="13" fill="#2f5fb3"/><text x="220" y="231" fill="#fff" text-anchor="middle" font-size="12">B</text>
+<text x="242" y="224" font-weight="bold">byelaw</text>
+<rect x="296" y="213" width="45" height="15" rx="3" fill="none" stroke="#2f5fb3"/><text x="301" y="224" font-size="10" fill="#2f5fb3">AGENT</text>
+<text x="242" y="242" fill="#222">Moved to the AGM agenda as item A-3 for a general-body resolution.</text>
+<circle cx="220" cy="272" r="13" fill="#999"/><text x="220" y="277" fill="#fff" text-anchor="middle" font-size="12">T</text>
+<text x="242" y="270" font-weight="bold">Treasurer</text>
+<rect x="320" y="259" width="73" height="15" rx="3" fill="none" stroke="#777"/><text x="325" y="270" font-size="10" fill="#777">TREASURER</text>
+<text x="242" y="288" fill="#222">@treasurer-agent pay the repainting advance</text>
+<circle cx="220" cy="318" r="13" fill="#2f5fb3"/><text x="220" y="323" fill="#fff" text-anchor="middle" font-size="12">T</text>
+<text x="242" y="316" font-weight="bold">treasurer-agent</text>
+<rect x="368" y="305" width="45" height="15" rx="3" fill="none" stroke="#2f5fb3"/><text x="373" y="316" font-size="10" fill="#2f5fb3">AGENT</text>
+<text x="242" y="334" fill="#222">Refused. No byelaw pass and no resolution for this item.</text>
+<rect x="206" y="606" width="608" height="32" rx="4" fill="#fff" stroke="#ccc"/><text x="218" y="626" fill="#777">Message #committee</text>
+<rect x="830" y="44" width="270" height="606" fill="#f3f3f3"/><text x="844" y="72" font-weight="bold">Room documents</text>
+<rect x="840" y="96" width="250" height="52" rx="4" fill="#fff" stroke="#ccc"/><text x="850" y="112" font-weight="bold" font-size="12">byelaws.yaml</text>
+<text x="850" y="128" fill="#777" font-size="11" font-family="Menlo,monospace">51+ members:</text>
+<text x="850" y="143" fill="#777" font-size="11" font-family="Menlo,monospace">  committee_limit: 100000</text>
+<rect x="840" y="158" width="250" height="67" rx="4" fill="#fff" stroke="#ccc"/><text x="850" y="174" font-weight="bold" font-size="12">agenda.md</text>
+<text x="850" y="190" fill="#777" font-size="11" font-family="Menlo,monospace">AGM</text>
+<text x="850" y="205" fill="#777" font-size="11" font-family="Menlo,monospace">A-3 Repainting Rs 4,00,000</text>
+<text x="850" y="220" fill="#777" font-size="11" font-family="Menlo,monospace">   (over committee limit)</text>
+<rect x="840" y="235" width="250" height="52" rx="4" fill="#fff" stroke="#ccc"/><text x="850" y="251" font-weight="bold" font-size="12">ledger.md</text>
+<text x="850" y="267" fill="#777" font-size="11" font-family="Menlo,monospace">INV-0412 PAID</text>
+<text x="850" y="282" fill="#777" font-size="11" font-family="Menlo,monospace">(no repainting line)</text>
+<rect y="650" width="1100" height="30" fill="#eee"/><text x="16" y="669" fill="#777" font-size="12">Low-fi wireframe. Limit check is deterministic code over byelaws.yaml, cited by number.</text>
+</svg>
