@@ -34,7 +34,7 @@ Deadline: submit by **Sat 7 Nov 2026, 22:00 IST** (hard deadline 23:59 IST). Hac
 
 | Skill | Who | Why |
 |---|---|---|
-| ponytail, ponytail-review | all engineering | smallest complete change, review for bloat |
+| ponytail, ponytail-review (plugin `ponytail@ponytail`) | all engineering | smallest complete change, review for bloat |
 | karpathy-guidelines | everyone | state assumptions, simplicity, surgical edits, verifiable goals |
 | test-driven-development | developers, platform, eng lead | red, green, refactor |
 | verification-before-completion | everyone | no "done" without fresh evidence |
