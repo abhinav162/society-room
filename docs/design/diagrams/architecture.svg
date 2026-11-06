@@ -42,16 +42,18 @@
 <line x1="520" y1="245" x2="600" y2="265" stroke="#222" stroke-width="1.5" marker-end="url(#a)"/>
 <line x1="520" y1="125" x2="600" y2="125" stroke="#222" stroke-width="1.5" marker-end="url(#a)"/>
 <line x1="520" y1="160" x2="600" y2="190" stroke="#222" stroke-width="1.5" marker-end="url(#a)"/>
-<line x1="305" y1="400" x2="305" y2="180" stroke="#2f5fb3" stroke-width="1.5" marker-end="url(#a)"/>
+<line x1="305" y1="180" x2="305" y2="400" stroke="#2f5fb3" stroke-width="1.5" marker-end="url(#a)"/>
 <text x="253.0" y="290.0" text-anchor="middle" font-size="11" fill="#2f5fb3">linked: published records</text>
 <line x1="520" y1="440" x2="600" y2="435" stroke="#222" stroke-width="1.5" marker-end="url(#a)"/>
 <line x1="760" y1="125" x2="830" y2="185" stroke="#222" stroke-width="1.5" marker-end="url(#a)"/>
 <line x1="760" y1="195" x2="830" y2="200" stroke="#222" stroke-width="1.5" marker-end="url(#a)"/>
 <line x1="760" y1="265" x2="830" y2="220" stroke="#222" stroke-width="1.5" marker-end="url(#a)"/>
-<text x="795" y="300" font-size="11" fill="#222" text-anchor="middle">shell: society ...</text>
+<text x="795" y="108" font-size="11" fill="#222" text-anchor="middle">shell: society ...</text>
 <line x1="980" y1="250" x2="980" y2="330" stroke="#1e7a3c" stroke-width="1.5" marker-end="url(#a)"/>
 <text x="1004.0" y="290.0" text-anchor="middle" font-size="11" fill="#1e7a3c">writes</text>
 <line x1="760" y1="440" x2="830" y2="420" stroke="#222" stroke-width="1.5" marker-end="url(#a)" stroke-dasharray="5 3"/>
 <text x="795.0" y="444.0" text-anchor="middle" font-size="11" fill="#222">read only</text>
+<line x1="730" y1="410" x2="890" y2="250" stroke="#a15c00" stroke-width="1.5" marker-end="url(#a)"/>
+<text x="780.0" y="370.0" text-anchor="middle" font-size="11" fill="#a15c00">agenda add only</text>
 <text x="20" y="620" fill="#666" font-size="12">Switch decides who may instruct an agent. Deterministic code decides what is allowed. The LLM only talks.</text>
 </svg>
