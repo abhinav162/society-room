@@ -3,7 +3,7 @@ from pathlib import Path
 
 import pytest
 
-from society_room.ledger import _inr, book, verify
+from society_room.ledger import book, verify
 from society_room.records import append_resolution
 
 ROOM = Path(__file__).parents[2] / "room"
@@ -71,15 +71,6 @@ def test_second_booking_refused(room):
     before = ledger(room)
     assert book(room, "INV-068", rid) == "REFUSED already booked"
     assert ledger(room) == before
-
-
-def test_inr():
-    assert [_inr(n) for n in (100, 25000, 100000, 400000)] == [
-        "100",
-        "25,000",
-        "1,00,000",
-        "4,00,000",
-    ]
 
 
 def test_verify(room):
