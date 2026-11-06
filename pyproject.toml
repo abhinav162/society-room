@@ -13,4 +13,4 @@ markers = ["live: needs a running Switch + Mattermost; runs only with SWITCH_LIV
 
 [tool.ruff]
 line-length = 100
-extend-exclude = ["docs"]
+extend-exclude = ["docs", "video"]
