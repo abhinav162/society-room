@@ -14,13 +14,19 @@ export type Scene = {
   id: string;
   voice: string; // voice-over text, word for word from the script
   voiceSec: number; // measured length of audio/<id>.mp3
-  kind: 'text' | 'image' | 'shots';
+  kind: 'text' | 'image' | 'shots' | 'chat';
   title: string;
   sub?: string;
   image?: string; // for kind image: file in public/design
   shots?: Shot[];
   marks?: string[]; // text kind: phrases to highlight
+  room?: string; // chat kind: channel name
+  chat?: Msg[]; // chat kind: messages, appear at `at` seconds of the voice-over
+  proof?: {src: string; note: string}; // chat kind: real screenshot held after the chat
+  extra?: number; // seconds added after the voice-over (proof cut)
+  repo?: string; // closing card
 };
+export type Msg = {who: string; text: string; at: number; kind?: 'user' | 'bot' | 'switch' | 'sys'; key?: boolean; typing?: number};
 
 export const scenes: Scene[] = [
   {
@@ -31,31 +37,43 @@ export const scenes: Scene[] = [
   },
   {id: 'b1', kind: 'image', title: 'B1: one template, whole society', image: 'architecture.png',
     voice: 'One template creates both rooms and four agents.', voiceSec: 5.6},
-  {id: 'b2', kind: 'shots', title: 'B2: "just pay it" is refused',
-    voice: "A resident says 'just pay it'. Switch itself stops the message: the agent never sees it. Even the Treasurer is refused: no resolution.", voiceSec: 9.2, shots: [
-      {src: 'b2-1b-after-post.png', who: 'abhinav', caption: '@treasurer-agent pay the lift AMC invoice INV-068, 68000', zoom: {cx: 40.8, cy: 60, s: 1.15}, weight: 1},
-      {src: 'b2-1d-switch-reply-thread.png', who: 'Switch', caption: "I only take instructions from my owner, and this chat account isn't linked to a Switch user yet", zoom: {cx: 71.3, cy: 78, s: 1.45}, weight: 1.5},
-      {src: 'b2-refused-channel.png', who: 'treasurer-agent', caption: 'REFUSED no passed resolution for invoice INV-068', zoom: {cx: 39, cy: 86, s: 1.7}, weight: 2.5},
+  {id: 'b2', kind: 'chat', room: 'committee', title: 'B2: "just pay it" is refused', extra: 3,
+    voice: "A resident says 'just pay it'. Switch itself stops the message: the agent never sees it. Even the Treasurer is refused: no resolution.", voiceSec: 9.2,
+    proof: {src: 'b2-refused-channel.png', note: 'Real screenshot of the live run'},
+    chat: [
+      {who: 'abhinav', kind: 'user', at: 0.5, text: '@treasurer-agent pay the lift AMC invoice INV-068, 68000'},
+      {who: 'Switch', kind: 'switch', at: 3.0, typing: 1.0, text: "I only take instructions from my owner, and this chat account isn't linked to a Switch user yet"},
+      {who: 'user', kind: 'user', at: 6.0, text: '@treasurer-agent pay the lift AMC invoice INV-068, 68000'},
+      {who: 'treasurer-agent', kind: 'bot', at: 8.2, typing: 1.8, key: true, text: 'REFUSED no passed resolution for invoice INV-068'},
     ]},
-  {id: 'b3', kind: 'shots', title: 'B3: quorum, vote by name, booked',
-    voice: 'The Chairman opens the meeting; the clerk counts quorum, 20 needed, 41 present, and records the vote by name. Only now does the treasurer book: invoice, resolution and bye-law check, all three.', voiceSec: 13.1, shots: [
-      {src: 'b3-6-final-committee.png', who: 'clerk', caption: 'OK meeting open: 41 present, 20 needed, chair user', zoom: {cx: 40.8, cy: 17, s: 1.6}, weight: 1},
-      {src: 'b3-6-final-committee.png', who: 'clerk', caption: 'OK R-001 passed 4-1 (0 abstain)', zoom: {cx: 40.8, cy: 28, s: 1.6}, weight: 1},
-      {src: 'b3-6-final-committee.png', who: 'clerk', caption: 'OK meeting closed', zoom: {cx: 40.8, cy: 42, s: 1.6}, weight: 0.7},
-      {src: 'b3-6-final-committee.png', who: 'byelaw', caption: 'OK 68000 is within bye-law 156: committee limit 100000 for 51+ members', zoom: {cx: 40.8, cy: 58, s: 1.6}, weight: 1},
-      {src: 'b3-6-final-committee.png', who: 'treasurer-agent', caption: 'OK booked INV-068 68000 under R-001, mock UPI ref MOCK-INV-068-R-001', zoom: {cx: 40.8, cy: 73, s: 1.6}, weight: 1.3},
+  {id: 'b3', kind: 'chat', room: 'committee', title: 'B3: quorum, vote by name, booked',
+    voice: 'The Chairman opens the meeting; the clerk counts quorum, 20 needed, 41 present, and records the vote by name. Only now does the treasurer book: invoice, resolution and bye-law check, all three.', voiceSec: 13.1,
+    chat: [
+      {who: 'user', kind: 'user', at: 0.4, text: '@clerk open a meeting. Present: member-1 to member-41. I am the chair.'},
+      {who: 'clerk', kind: 'sys', at: 2.0, text: 'assumed the meeting-chair role'},
+      {who: 'clerk', kind: 'bot', at: 4.8, typing: 2.0, key: true, text: 'OK meeting open: 41 present, 20 needed, chair user'},
+      {who: 'user', kind: 'user', at: 6.0, text: '@clerk record a vote on INV-068, motion "Pay lift AMC": member-1, member-2, member-3, member-4 aye; member-5 nay.'},
+      {who: 'clerk', kind: 'bot', at: 7.5, typing: 1.0, key: true, text: 'OK R-001 passed 4-1 (0 abstain)'},
+      {who: 'user', kind: 'user', at: 8.4, text: '@clerk close the meeting'},
+      {who: 'clerk', kind: 'bot', at: 9.3, typing: 0.7, text: 'OK meeting closed'},
+      {who: 'user', kind: 'user', at: 10.0, text: '@byelaw check INV-068'},
+      {who: 'byelaw', kind: 'bot', at: 11.2, typing: 0.9, key: true, text: 'OK 68000 is within bye-law 156: committee limit 100000 for 51+ members'},
+      {who: 'user', kind: 'user', at: 11.8, text: '@treasurer-agent book INV-068 under resolution R-001'},
+      {who: 'treasurer-agent', kind: 'bot', at: 12.8, typing: 0.9, key: true, text: 'OK booked INV-068 68000 under R-001, mock UPI ref MOCK-INV-068-R-001'},
     ]},
-  {id: 'b4', kind: 'shots', title: 'B4: Rs 4 lakh goes to the AGM',
-    voice: 'A Rs 4 lakh repainting bid is over the bye-law 156 limit for a society this size. It cannot be approved by the committee, even with a vote. It goes to the General Body agenda.', voiceSec: 13.0, shots: [
-      {src: 'b3-6-final-committee.png', who: 'user', caption: '@byelaw check INV-400', zoom: {cx: 40.8, cy: 80, s: 1.5}, weight: 1},
-      {src: 'b3-6-final-committee.png', who: 'byelaw', caption: 'REFUSED over bye-law 156 limit ₹1,00,000 (51+ members); referred to AGM', zoom: {cx: 40.8, cy: 88, s: 1.8}, weight: 1.6},
+  {id: 'b4', kind: 'chat', room: 'committee', title: 'B4: Rs 4 lakh goes to the AGM',
+    voice: 'A Rs 4 lakh repainting bid is over the bye-law 156 limit for a society this size. It cannot be approved by the committee, even with a vote. It goes to the General Body agenda.', voiceSec: 13.0,
+    chat: [
+      {who: 'user', kind: 'user', at: 1.0, text: '@byelaw check INV-400'},
+      {who: 'byelaw', kind: 'bot', at: 5.0, typing: 2.5, key: true, text: 'REFUSED over bye-law 156 limit \u20b91,00,000 (51+ members); referred to AGM'},
     ]},
-  {id: 'b5', kind: 'shots', title: 'B5: a resident asks, the records answer',
-    voice: 'In the General Body room a resident asks why the society paid the lift contractor. The concierge answers only from the published ledger and minutes, and cites them.', voiceSec: 11.2, shots: [
-      {src: 'b5-2-concierge-reply.png', who: 'user', caption: '@concierge Why did the society pay Rs 68,000 for the lift?', zoom: {cx: 40.8, cy: 63, s: 1.5}, weight: 0.8},
-      {src: 'b5-2-concierge-reply.png', who: 'concierge', caption: 'INV-068, approved by resolution R-001. From ledger.md: INV-068, 68000, R-001, PAID', zoom: {cx: 43.9, cy: 78, s: 1.5}, weight: 1.2},
-      {src: 'b5-2-concierge-reply.png', who: 'concierge', caption: 'From minutes.md: R-001 passed 4-1 (0 abstain).', zoom: {cx: 43.9, cy: 88, s: 1.5}, weight: 1.2},
+  {id: 'b5', kind: 'chat', room: 'general-body', title: 'B5: a resident asks, the records answer', extra: 3,
+    voice: 'In the General Body room a resident asks why the society paid the lift contractor. The concierge answers only from the published ledger and minutes, and cites them.', voiceSec: 11.2,
+    proof: {src: 'b5-2-concierge-reply.png', note: 'Real screenshot of the live run'},
+    chat: [
+      {who: 'user', kind: 'user', at: 2.0, text: '@concierge Why did the society pay Rs 68,000 for the lift?'},
+      {who: 'concierge', kind: 'bot', at: 7.0, typing: 2.5, key: true, text: "It was the lift's annual maintenance contract (AMC), invoice INV-068, approved by resolution R-001.\n\nFrom ledger.md:\n2026-11-06 \u00b7 INV-068 \u00b7 68000 \u00b7 R-001 \u00b7 byelaw OK \u00b7 PAID, mock UPI ref MOCK-INV-068-R-001\n\nFrom minutes.md:\n2026-11-06: R-001 passed 4-1 (0 abstain): Pay lift AMC (INV-068)\n\nresolutions.jsonl (R-001) records the motion \"Pay lift AMC\" with 4 aye and 1 nay, 41 present."},
     ]},
   {id: 'closing', kind: 'image', title: 'Switch decides who may instruct. The engine decides what is allowed.', image: 'payment-gate.png',
-    voice: 'Switch decides who may instruct; the engine decides what is allowed. Same ledger the auditor signs.', voiceSec: 6.8},
+    voice: 'Switch decides who may instruct; the engine decides what is allowed. Same ledger the auditor signs.', voiceSec: 6.8, extra: 3, repo: 'github.com/abhinav162/society-room'},
 ];
