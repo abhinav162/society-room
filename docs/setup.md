@@ -12,7 +12,7 @@ Needs: Docker running, `uv` installed, Switch Console open with its local server
 7. **Outsider commands are refused.** As `abhinav` post `!reset @treasurer-agent`. Expect a refusal too.
 8. **Owner is answered.** As Mattermost `user` post the same line as step 6. Expect `treasurer-agent` to answer (expect `REFUSED no passed resolution for invoice INV-068`; it does not pay).
 9. **Meeting lease.** As Mattermost `user` post `@clerk open a meeting`, then `!roles`. Expect `!roles` to show `clerk` holding `meeting-chair`. Then as `abhinav` post `@meeting-chair close the meeting`; expect a refusal.
-10. **Release.** In Switch Console stop the `clerk` session, wait 10 seconds, post `!roles`. Expect `meeting-chair` released. Copy the chat lines from steps 6 to 10 (or screenshot them) and send them to Oscar and Stanley.
+10. **Release.** In `committee` post `@clerk close the meeting` (the clerk drops `meeting-chair` itself), then `!roles`: expect no holder for `meeting-chair`. If it is still held after 10 seconds, post `!reset @clerk` (ends the clerk's session, which releases the lease) and `!roles` again. Copy the chat lines from steps 6 to 10 (or screenshot them) and send them to Oscar and Stanley.
 
 Not testable with one linked person: "Chairman (a different linked user) is refused by the treasurer". Switch's own policy code already covers it (15/15, `docs/adr/evidence/`). To test it live, as `admin` create Mattermost user `chairman`, log in as them, link them in Console Home, add them to `committee`, and post the step 6 line.
 
