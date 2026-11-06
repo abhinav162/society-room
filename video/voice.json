@@ -1,9 +1,10 @@
 {
- "opening": "In Maharashtra, housing society committees are unpaid volunteers who sign for crores, and registrars dissolve committees that cannot show a recorded resolution. Apps like MyGate log who approved a payment. Society Room makes sure they had the right to: an invoice, a quorate vote by name, and the bye-law limit. Rules are enforced by Switch roles and deterministic code, not by a prompt. First buyer: the society's auditor, who signs off on exactly these records.",
- "b1": "One template creates both rooms and four agents.",
- "b2": "A resident says 'just pay it'. Switch itself stops the message: the agent never sees it. Even the Treasurer is refused: no resolution.",
+ "hook": "A resident says 'just pay it'. Switch itself stops the message: the agent never sees it.",
+ "opening": "Housing society committees are unpaid volunteers who sign for crores. Registrars dissolve those who cannot show a recorded resolution. Society Room checks they had the right to pay.",
+ "b1": "One template creates both rooms and four agents. Switch decides who may instruct each one.",
+ "b2": "Even the Treasurer is refused: no passed resolution.",
  "b3": "The Chairman opens the meeting; the clerk counts quorum, 20 needed, 41 present, and records the vote by name. Only now does the treasurer book: invoice, resolution and bye-law check, all three.",
- "b4": "A Rs 4 lakh repainting bid is over the bye-law 156 limit for a society this size. It cannot be approved by the committee, even with a vote. It goes to the General Body agenda.",
- "b5": "In the General Body room a resident asks why the society paid the lift contractor. The concierge answers only from the published ledger and minutes, and cites them.",
+ "b4": "A Rs 4 lakh bid is over the bye-law 156 limit. Even a vote cannot approve it: it goes to the General Body agenda.",
+ "b5": "In the General Body room a member asks why the society paid the lift contractor. The concierge answers only from the published ledger and minutes, and cites them.",
  "closing": "Switch decides who may instruct; the engine decides what is allowed. Same ledger the auditor signs."
 }
