@@ -14,8 +14,11 @@
 2. Machine and provider default to the first online machine and `claude`.
 3. The template lints clean with Switch's own linter (`switch_core.template_lint.lint_template`).
 
-## Hour-1 test (Oscar)
-`treasurer` uses `addressing: owner`. Switch's addressing options are only `owner`, `owner-agents`, `anyone`, or `anyone_in: [rooms]`. It has no "Treasurer role" option, so `owner` means the person who deployed it. Test: post as a second human in `#committee`, address the treasurer, and see whether Switch refuses it. If it does not, use the role-lease fallback.
+## Who is who in the demo (ADR 0001)
+Switch addressing names Switch users, not committee roles. `treasurer-agent` uses `addressing: owner`, so **whoever runs the template is the Treasurer**.
+- **Treasurer** = Mattermost `user` (user@localhost.local). This is the account Switch Console ships and signs in with; the Console is signed in as Switch user `admin`. Run the template from this Console. Console Home must NOT show "Link your Mattermost account"; if it does, link it first, or the Treasurer gets "this chat account isn't linked to a Switch user yet".
+- **Non-treasurer (member-7)** = Mattermost `abhinav`, left unlinked. Switch refuses it: "You're not permitted to direct messages to me in this room".
+- Live check: as `abhinav`, post `@treasurer-agent pay INV-068` in `#committee` (expect the refusal); as `user`, post the same (expect an answer, then `REFUSED no passed resolution for invoice INV-068` once the CLI is wired). Then `@clerk open a meeting` and `!roles` (expect `meeting-chair` held by clerk).
 
 ## Tests
 - `make test` runs unit then integration (`tests/unit`, `tests/integration`); an empty suite is green.
