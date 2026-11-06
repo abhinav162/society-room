@@ -5,22 +5,34 @@ params:
 resources:
   clerk:
     type: agent
+    name: clerk
     display_name: Clerk
     instructions: Open meetings, check quorum from members.yaml, record motions and votes by name.
     provider: "{provider}"
     machine: "{machine}"
     directory: "{$agents_dir}/{clerk.name}"
     addressing: {anyone_in: [committee]}
-  treasurer:
+  treasurer_agent:
     type: agent
+    name: treasurer-agent
     display_name: Treasurer Agent
     instructions: Book an expense only with an invoice id, a passed resolution id and a byelaw pass. Otherwise refuse and say why.
     provider: "{provider}"
     machine: "{machine}"
-    directory: "{$agents_dir}/{treasurer.name}"
+    directory: "{$agents_dir}/{treasurer_agent.name}"
     addressing: owner   # hour-1 test: does Switch refuse messages from non-owners?
+  byelaw:
+    type: agent
+    name: byelaw
+    display_name: Byelaw
+    instructions: Check an amount against byelaws.yaml for the member count. Above the limit, move the item to the AGM agenda instead of approving.
+    provider: "{provider}"
+    machine: "{machine}"
+    directory: "{$agents_dir}/{byelaw.name}"
+    addressing: {anyone_in: [committee]}
   concierge:
     type: agent
+    name: concierge
     display_name: Concierge
     instructions: Answer residents only from published ledger.md, minutes.md, resolutions.jsonl.
     provider: "{provider}"
@@ -32,7 +44,8 @@ resources:
     name: committee
     description: Society committee (private)
     channel_type: channel_private
-    agents: [clerk, treasurer]
+    agents: [clerk, treasurer_agent, byelaw]
+    instructions: Clerk takes the exclusive role meeting-chair when the Chairman opens a meeting; define that role first if it does not exist.
     group: society
   general_body:
     type: room
