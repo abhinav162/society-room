@@ -15,7 +15,7 @@
 <circle cx="220" cy="118" r="13" fill="#999"/><text x="220" y="123" fill="#fff" text-anchor="middle" font-size="12">L</text>
 <text x="242" y="116" font-weight="bold">lift-amc (vendor)</text>
 <rect x="384" y="105" width="52" height="15" rx="3" fill="none" stroke="#777"/><text x="389" y="116" font-size="10" fill="#777">VENDOR</text>
-<text x="242" y="134" fill="#222">Invoice INV-0412: Lift AMC, Rs 68,000. Attached invoices/INV-0412.txt</text>
+<text x="242" y="134" fill="#222">Invoice INV-068: Lift AMC, Rs 68,000. Attached invoices/INV-068.txt</text>
 <circle cx="220" cy="164" r="13" fill="#999"/><text x="220" y="169" fill="#fff" text-anchor="middle" font-size="12">M</text>
 <text x="242" y="162" font-weight="bold">member-7</text>
 <rect x="312" y="151" width="52" height="15" rx="3" fill="none" stroke="#777"/><text x="317" y="162" font-size="10" fill="#777">MEMBER</text>
@@ -27,19 +27,18 @@
 <circle cx="220" cy="278" r="13" fill="#999"/><text x="220" y="283" fill="#fff" text-anchor="middle" font-size="12">T</text>
 <text x="242" y="276" font-weight="bold">Treasurer</text>
 <rect x="320" y="265" width="73" height="15" rx="3" fill="none" stroke="#777"/><text x="325" y="276" font-size="10" fill="#777">TREASURER</text>
-<text x="242" y="294" fill="#222">@treasurer-agent pay INV-0412</text>
+<text x="242" y="294" fill="#222">@treasurer-agent pay INV-068</text>
 <circle cx="220" cy="324" r="13" fill="#2f5fb3"/><text x="220" y="329" fill="#fff" text-anchor="middle" font-size="12">T</text>
 <text x="242" y="322" font-weight="bold">treasurer-agent</text>
 <rect x="368" y="311" width="45" height="15" rx="3" fill="none" stroke="#2f5fb3"/><text x="373" y="322" font-size="10" fill="#2f5fb3">AGENT</text>
-<text x="242" y="340" fill="#222">Refused. No resolution on file for INV-0412. Needs: invoice id, passed</text>
-<text x="242" y="356" fill="#222">resolution id, bye-law pass.</text>
+<text x="242" y="340" fill="#222">REFUSED no passed resolution for invoice INV-068</text>
 <rect x="206" y="606" width="608" height="32" rx="4" fill="#fff" stroke="#ccc"/><text x="218" y="626" fill="#777">Message #committee</text>
 <rect x="830" y="44" width="270" height="606" fill="#f3f3f3"/><text x="844" y="72" font-weight="bold">Room documents</text>
 <rect x="840" y="96" width="250" height="52" rx="4" fill="#fff" stroke="#ccc"/><text x="850" y="112" font-weight="bold" font-size="12">invoices/</text>
-<text x="850" y="128" fill="#777" font-size="11" font-family="Menlo,monospace">INV-0412  Rs 68,000</text>
+<text x="850" y="128" fill="#777" font-size="11" font-family="Menlo,monospace">INV-068  Rs 68,000</text>
 <text x="850" y="143" fill="#777" font-size="11" font-family="Menlo,monospace">  lift AMC, Q4</text>
 <rect x="840" y="158" width="250" height="37" rx="4" fill="#fff" stroke="#ccc"/><text x="850" y="174" font-weight="bold" font-size="12">resolutions.jsonl</text>
-<text x="850" y="190" fill="#777" font-size="11" font-family="Menlo,monospace">(none for INV-0412)</text>
+<text x="850" y="190" fill="#777" font-size="11" font-family="Menlo,monospace">(none for INV-068)</text>
 <rect x="840" y="205" width="250" height="37" rx="4" fill="#fff" stroke="#ccc"/><text x="850" y="221" font-weight="bold" font-size="12">ledger.md</text>
 <text x="850" y="237" fill="#777" font-size="11" font-family="Menlo,monospace">(empty)</text>
 <rect y="650" width="1100" height="30" fill="#eee"/><text x="16" y="669" fill="#777" font-size="12">Low-fi wireframe. Red banner = refusal by role addressing (Switch), not by the LLM. Second refusal = rule check.</text>

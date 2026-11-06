@@ -58,28 +58,29 @@ def architecture(p):
 
 def gate(p):
     s = Svg(1160, 620, "The payment gate: money leaves only through these checks")
-    s.box(20, 70, 160, 60, ["Invoice posted", "id INV-0412"], bold=1)
+    s.box(20, 70, 160, 60, ["Invoice posted", "id INV-068"], bold=1)
     s.box(220, 70, 200, 60, ["Switch addressing", "who is instructing?"], "sw", bold=1)
     s.box(220, 190, 200, 60, ["Blocked by Switch", "not the Treasurer"], "bad", bold=1, stroke=RED)
     s.box(460, 70, 200, 60, ["treasurer-agent", "runs: society book"], "ag", bold=1)
     s.arrow(180, 100, 220, 100); s.arrow(420, 100, 460, 100, "")
     s.o.append(f'<text x="440" y="92" text-anchor="middle" font-size="11">Treasurer</text>')
     s.arrow(320, 130, 320, 190, "member-7 etc.", color=RED, ly=0, lx=40)
-    gates = [("1  Invoice id on file?", "no invoice"), ("2  Passed resolution id?", "no passed resolution"), ("3  Quorate vote by name?", "quorum not met"), ("4  Within bye-law 156 limit?", "over limit")]
-    x = 20
-    s.o.append(f'<text x="20" y="330" font-weight="bold">society book checks (deterministic code)</text>')
+    gates = [(["1  Invoice id on file?"], ["REFUSED no invoice INV-068"]),
+             (["2  Passed, quorate resolution", "for this invoice?"], ["REFUSED no passed resolution", "for invoice INV-068"]),
+             (["3  Within bye-law 156 limit?"], ["REFUSED over bye-law 156 limit", "Rs 1,00,000 (51+ members);", "referred to AGM"]),
+             (["4  Already booked?"], ["REFUSED already booked"])]
+    s.o.append(f'<text x="20" y="330" font-weight="bold">society book checks, in this order (deterministic code)</text>')
     for i, (q, no) in enumerate(gates):
         gx = 20 + i * 215
-        s.box(gx, 345, 190, 60, [q], "warn", stroke=AMBER)
-        if i < 3: s.arrow(gx + 190, 375, gx + 215, 375, "", color=GREEN)
-        s.box(gx, 450, 190, 50, ["REFUSED: " + no], "bad", stroke=RED)
-        s.arrow(gx + 95, 405, gx + 95, 450, "no", color=RED, lx=10, ly=0)
+        s.box(gx, 345, 200, 60, q, "warn", stroke=AMBER)
+        if i < 3: s.arrow(gx + 200, 375, gx + 215, 375, "", color=GREEN)
+        s.box(gx, 450, 200, 66, no, "bad", stroke=RED)
+        s.arrow(gx + 100, 405, gx + 100, 450, "no", color=RED, lx=10, ly=0)
     s.box(880, 345, 260, 60, ["ledger.md line:", "invoice + resolution + byelaw pass", "PAID, mock UPI ref"], "ok", bold=1, stroke=GREEN)
-    s.arrow(855, 375, 880, 375, "", color=GREEN)
-    s.box(860, 525, 280, 50, ["Over limit: item added to agenda.md", "for the AGM; a committee vote cannot override"], "warn", stroke=AMBER)
-    s.arrow(760, 500, 860, 540, "", color=AMBER)
+    s.arrow(865, 375, 880, 375, "", color=GREEN)
     s.arrow(560, 130, 560, 330, "")
-    s.o.append(f'<text x="20" y="605" fill="{MUTE}" font-size="12">Beats: 2 = blocked and refused, 3 = all checks pass and booked, 4 = Rs 4,00,000 fails check 4. Limits: Rs 25,000 / 50,000 / 1,00,000 by member count (prd.md section 4).</text>')
+    s.o.append(f'<text x="20" y="565" fill="{MUTE}" font-size="12">Beats: 2 = blocked, then REFUSED at check 2. 3 = all checks pass, booked. 4 = INV-400 (Rs 4,00,000) fails check 3 and goes to agenda.md for the AGM.</text>')
+    s.o.append(f'<text x="20" y="585" fill="{MUTE}" font-size="12">Limits by member count: Rs 25,000 / 50,000 / 1,00,000 (prd.md section 4). A committee vote cannot override check 3.</text>')
     s.save(p)
 
 if __name__ == "__main__":
