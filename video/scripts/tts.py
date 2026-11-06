@@ -6,7 +6,7 @@ out = sys.argv[2] if len(sys.argv) > 2 else "public/audio"
 for k in (ids if sys.argv[1] == "all" else [sys.argv[1]]):
     r = urllib.request.Request("https://api.openai.com/v1/audio/speech", method="POST",
         headers={"Authorization": "Bearer " + os.environ["OPENAI_API_KEY"], "Content-Type": "application/json"},
-        data=json.dumps({"model": "gpt-4o-mini-tts", "voice": "onyx", "input": ids[k], "response_format": "mp3",
+        data=json.dumps({"model": "gpt-4o-mini-tts", "voice": "onyx", "input": ids[k], "response_format": "mp3", "speed": 0.95,
                          "instructions": "Calm, clear documentary narrator. Steady pace."}).encode())
     open(f"{out}/{k}.mp3", "wb").write(urllib.request.urlopen(r).read())
     print("wrote", k)
