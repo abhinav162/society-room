@@ -47,7 +47,12 @@ def _lines(room):
     return [line for line in path.read_text().splitlines() if line.strip()] if path.exists() else []
 
 
+CHAIN_BROKEN = "REFUSED resolutions.jsonl hash chain broken"
+
+
 def book(room, invoice_id, resolution_id):
+    if not records.verify_chain(room / "resolutions.jsonl"):
+        return CHAIN_BROKEN
     invoice = _invoice(room, invoice_id)
     if invoice is None:
         return f"REFUSED no invoice {invoice_id}"
@@ -56,9 +61,10 @@ def book(room, invoice_id, resolution_id):
     spend = rules.check_spend(invoice["amount"], _members(room))
     if not spend.ok:
         limit, label = rules._tier(_members(room))
-        records.append_agenda(
-            room / "agenda.md", f"AGM sanction for {invoice_id} ({resolution_id}): {spend.reason}"
-        )
+        item = f"AGM sanction for {invoice_id} ({resolution_id}): {spend.reason}"
+        agenda = room / "agenda.md"
+        if not (agenda.exists() and f"- {item}" in agenda.read_text().splitlines()):
+            records.append_agenda(agenda, item)
         return f"REFUSED over bye-law 156 limit ₹{_inr(limit)} ({label} members); referred to AGM"
     if any(line.split(SEP)[1:2] == [invoice_id] for line in _lines(room)):
         return "REFUSED already booked"
@@ -81,12 +87,14 @@ def book(room, invoice_id, resolution_id):
 def verify(room):
     """Re-check every ledger line against invoices and resolutions; catches hand edits."""
     if not records.verify_chain(room / "resolutions.jsonl"):
-        return "REFUSED resolutions.jsonl hash chain broken"
+        return CHAIN_BROKEN
     for line in _lines(room):
         fields = line.split(SEP)
+        invoice = _invoice(room, fields[1]) if len(fields) >= 4 else None
         if (
-            len(fields) < 4
-            or _invoice(room, fields[1]) is None
+            invoice is None
+            or fields[2] != str(invoice["amount"])
+            or not rules.check_spend(invoice["amount"], _members(room)).ok
             or _resolution(room, fields[3], fields[1]) is None
         ):
             return f"REFUSED {line}"

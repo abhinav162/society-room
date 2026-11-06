@@ -105,3 +105,31 @@ def test_book_survives_malformed_ledger_line(room):
     (room / "ledger.md").write_text("hand-written note\n")
     rid = resolve(room, "INV-068")
     assert book(room, "INV-068", rid).startswith("OK booked INV-068")
+
+
+def test_book_refuses_forged_resolution(room):
+    forged = '{"id": "R-FAKE", "passed": true, "invoice_id": "INV-068", "present": 25}'
+    (room / "resolutions.jsonl").write_text(forged + "\n")
+    assert book(room, "INV-068", "R-FAKE") == "REFUSED resolutions.jsonl hash chain broken"
+    assert ledger(room) == ""
+
+
+def test_verify_catches_edited_amount(room):
+    book(room, "INV-068", resolve(room, "INV-068"))
+    path = room / "ledger.md"
+    path.write_text(path.read_text().replace(" 68000 ", " 680000 "))
+    assert verify(room).startswith("REFUSED ")
+
+
+def test_verify_catches_hand_booked_over_limit_line(room):
+    rid = resolve(room, "INV-400")
+    line = f"2026-11-06 · INV-400 · 400000 · {rid} · byelaw OK · PAID, mock UPI ref X"
+    (room / "ledger.md").write_text(line + "\n")
+    assert verify(room) == f"REFUSED {line}"
+
+
+def test_repeated_over_limit_booking_adds_one_agenda_item(room):
+    rid = resolve(room, "INV-400")
+    book(room, "INV-400", rid)
+    book(room, "INV-400", rid)
+    assert len((room / "agenda.md").read_text().splitlines()) == 1
