@@ -1,6 +1,6 @@
 # Society Room: PRD (hackathon MVP)
 
-Owner: Kelly (product). Source: `docs/business-plan.md` section 8. Track 1, Best Business Workflow. Submit by Sat 2026-11-07 22:00 IST.
+Source: `docs/business-plan.md` section 8. Track 1, Best Business Workflow. Submit by Sat 2026-11-07 22:00 IST.
 
 ## 1. Problem
 

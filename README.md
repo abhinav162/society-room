@@ -24,17 +24,52 @@ Quorum (bye-law 100): 2/3 of members or 20, whichever is less. The demo society 
 4. A Rs 4,00,000 repainting bid is over the bye-law 156 limit and goes to the AGM agenda, even with a committee vote.
 5. A resident asks in `#general-body`; the concierge answers only by quoting the published ledger and minutes.
 
+```mermaid
+sequenceDiagram
+    actor R as Resident
+    actor T as Treasurer
+    actor C as Chairman
+    participant S as Switch
+    participant A as Agents
+    participant E as society CLI (rules engine)
+    R->>S: "@treasurer-agent just pay it"
+    S--xR: refused: not the owner (agent never runs)
+    T->>A: pay INV-068
+    A->>E: society book INV-068
+    E-->>A: REFUSED no passed resolution
+    C->>A: open meeting, vote R-001
+    A->>E: quorum check, record votes by name
+    E-->>A: OK R-001 passed 4-1
+    T->>A: pay INV-068
+    A->>E: society book INV-068
+    E-->>A: OK booked (invoice + resolution + bye-law check)
+    R->>A: why did the lift cost 68,000?
+    A-->>R: quotes ledger.md and minutes.md
+```
+
+The real `#committee` channel at the end of the meeting beat:
+
+![Committee channel after the meeting](video/public/shots/b3-6-final-committee.png)
+
 Rehearsal lines and expected replies: [`docs/demo-script.md`](docs/demo-script.md). Wireframes and diagrams: [`docs/design/`](docs/design/).
 
 ## How Switch is used
 
 Without Switch there is no room, no addressing and no role to enforce. The split is one rule: **Switch decides who may instruct an agent; deterministic code decides what is allowed; the LLM only talks.**
 
+![Architecture: Mattermost channels, Switch rooms and addressing, agents, and the society CLI that alone writes the records](docs/design/diagrams/architecture.png)
+
 - **Rooms.** `committee` (private) and `general-body` (residents) are created from one YAML template, [`switch/society-room.yaml`](switch/society-room.yaml), and linked so committee records are published to residents.
 - **Addressing.** `treasurer-agent` and `clerk` use `addressing: owner`. Switch refuses anyone else on the server, before the agent runs. `byelaw` and `concierge` use `anyone_in` their room. The person who runs the template is the owner, so the Treasurer runs it.
 - **Meeting lease.** The clerk holds the exclusive role `meeting-chair` while a meeting runs. `!roles` shows the holder.
 - **Hash-chained records.** `resolutions.jsonl` links each resolution to the previous one by hash; `verify` fails if a line was edited by hand.
 - **Agents run a CLI.** Quorum, the bye-law 156 check, the booking gate and the records are the `society_room` Python engine. Agents run it and relay its one output line (`OK ...` or `REFUSED ...`) word for word.
+
+### The payment gate
+
+Money leaves only after Switch lets the Treasurer through and the engine passes four checks in order:
+
+![Payment gate: Switch addressing, then invoice on file, passed quorate resolution, bye-law 156 limit, not already booked](docs/design/diagrams/payment-gate.png)
 
 Evidence that Switch itself refuses outsiders (15/15 policy checks, plus a live replay): [`docs/adr/0001-switch-go-no-go.md`](docs/adr/0001-switch-go-no-go.md). Design: [`docs/architecture.md`](docs/architecture.md).
 

@@ -5,7 +5,7 @@
 
 ## Context
 
-Quorum, the bye-law 156 limits and the payment gate must be deterministic and tested (TEAM.md, definition of done). The agents are Claude Code sessions that Switch Console runs, and they have a shell. We have about 28 hours.
+Quorum, the bye-law 156 limits and the payment gate must be deterministic and tested. The agents are Claude Code sessions that Switch Console runs, and they have a shell. We have about 28 hours.
 
 ## Decision
 
