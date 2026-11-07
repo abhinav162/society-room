@@ -61,7 +61,7 @@ In a clone, set the template's `Society room folder` to the absolute path of you
 | `room/` | seed data (`byelaws.yaml`, `members.yaml`, `invoices/`); records grow here through the CLI |
 | `tests/` | unit and integration tests, including a replay of demo beats B2 to B5 |
 | `docs/` | PRD, architecture, ADRs, setup, demo script, design |
-| `video/` | demo video sources |
+| `video/` | demo video source (Remotion, `npm run render` builds `explainer-v3.mp4`) |
 
 ## Limits
 
