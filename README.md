@@ -2,7 +2,7 @@
 
 **MyGate logs who approved a payment. Society Room makes sure they had the right to: an invoice, a quorate vote by name, and the bye-law limit, enforced by Switch roles and deterministic code, not by a prompt.**
 
-Built for the Flip the Switch hackathon (Track 1, Best Business Workflow). Demo video: <link>
+Built for the Flip the Switch hackathon (Track 1, Best Business Workflow). Demo video: [watch on Google Drive](https://drive.google.com/file/d/1u21Yg2GcgYIGE9707ufbGvZUlHowd3Ds/view?usp=sharing)
 
 ## The problem
 
